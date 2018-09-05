@@ -121,6 +121,46 @@
           }
         }
       }
+    },
+    "oknoram": {
+      "root": "projects/oknoram",
+      "sourceRoot": "projects/oknoram/src",
+      "projectType": "library",
+      "prefix": "okm",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/oknoram/tsconfig.lib.json",
+            "project": "projects/oknoram/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/oknoram/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/oknoram/src/test.ts",
+            "tsConfig": "projects/oknoram/tsconfig.spec.json",
+            "karmaConfig": "projects/oknoram/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/oknoram/tsconfig.lib.json",
+              "projects/oknoram/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "oknoram-app"
