@@ -8,6 +8,8 @@
     "build-lib": "ng build oknoram",
     "build-lib-ci": "ng build oknoram --prod",
     "test": "ng test",
+    "test-lib": "ng test oknoram",
+    "test-lib-ci": "ng test oknoram --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
