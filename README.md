@@ -19,7 +19,11 @@ Requirements: a running Knora stack containing the Anything ontology with data. 
 We start by defining the mapping of a `Thing` resource to a `ThingModel` Typescript class (here, we just want to get the `iri`, `label` and `hasText` properties:
 
 ```typescript
-@Resource({ name: 'Thing' })
+@Resource({
+  name: 'Thing',
+  projectCode: '0001',
+  projectShortname: 'anything'
+})
 export class ThingModel {
   @Iri
   id: string;
@@ -33,11 +37,17 @@ export class ThingModel {
 We configure the module:
 
 ```typescript
-OknoramModule.forRoot({
-  knoraApiBaseUrl: environment.knoraApiBaseUrl,
-  projectCode: environment.projectCode,
-  projectShortname: environment.projectShortname
-} as OknoramConfig);
+@NgModule({
+  [...]
+  imports: [
+    [...]
+    OknoramModule.forRoot({
+      knoraApiBaseUrl: environment.knoraApiBaseUrl,
+      projectCode: environment.projectCode,
+      projectShortname: environment.projectShortname
+    } as OknoramConfig)
+  ],
+[...]
 ```
 
 We get resources:
@@ -67,6 +77,7 @@ How does it work?
 - At initialization, the mapping is extracted from Typescript [`Decorator`](https://www.typescriptlang.org/docs/handbook/decorators.html): [see implementation](projects/oknoram/src/lib/mapping)
 
 - On [`OknoramService`](projects/oknoram/src/lib/core/oknoram.service.ts) call, we execute the following process:
+
   1. we generate the `gravsearch` query of the required class from the mapping ([`GravsearchService`](projects/oknoram/src/lib/gravsearch/gravsearch.service.ts))
   2. we execute the query with the `search extended` Knora API ([`KnoraApiService`](projects/oknoram/src/lib/knora-api/knora-api.service.ts))
   3. we convert the `json-ld` result into the instances of the required class ([`ConverterService`](projects/oknoram/src/lib/converter/converter.service.ts))
@@ -76,5 +87,3 @@ How does it work?
   - `GravsearchService`: [`GravsearchGvqueryService`](projects/oknoram/src/lib/gravsearch/impl/gravsearch-gvquery.service.ts)
   - `KnoraApiService`: [`KnoraApiDefaultService`](projects/oknoram/src/lib/knora-api/impl/knora-api-default.service.ts)
   - `ConverterService`: [`ConverterReadresourceService`](projects/oknoram/src/lib/converter/impl/converter-readresource.service.ts)
-
-

@@ -9,9 +9,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     OknoramModule.forRoot({
-      knoraApiBaseUrl: environment.knoraApiBaseUrl,
-      projectCode: environment.projectCode,
-      projectShortname: environment.projectShortname
+      knoraApiBaseUrl: environment.knoraApiBaseUrl
     } as OknoramConfig)
   ],
   providers: [],

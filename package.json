@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-lib": "ng build oknoram",
+    "build-lib-ci": "ng build oknoram --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
