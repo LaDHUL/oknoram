@@ -18,8 +18,8 @@ export class ConverterReadresourceService implements ConverterService {
     }
     rm.attributes.forEach((att, key) => {
       const fullAttName = `${this.config.knoraApiBaseUrl}/ontology/${
-        this.config.projectCode
-      }/${this.config.projectShortname}/v2#${att.name}`;
+        rm.def.projectCode
+      }/${rm.def.projectShortname}/v2#${att.name}`;
       if (!(fullAttName in res.properties) && !att.optional) {
         throw new Error(`Cannot find property ${fullAttName} in query result`);
       } else if (fullAttName in res.properties) {

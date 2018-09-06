@@ -10,7 +10,11 @@ import {
 } from 'oknoram';
 import { Observable } from 'rxjs';
 
-@Resource({ name: 'Thing' })
+@Resource({
+  name: 'Thing',
+  projectCode: '0001',
+  projectShortname: 'anything'
+})
 export class ThingModel {
   @Iri
   id: string;

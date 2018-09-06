@@ -6,6 +6,4 @@ export const OknoramConfigToken = new InjectionToken<OknoramConfig>(
 
 export interface OknoramConfig {
   knoraApiBaseUrl: string;
-  projectCode: string;
-  projectShortname: string;
 }

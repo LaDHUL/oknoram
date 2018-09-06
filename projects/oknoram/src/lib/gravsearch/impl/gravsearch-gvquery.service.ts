@@ -21,8 +21,8 @@ export class GravsearchGvqueryService implements GravsearchService {
   buildQuery(rm: ResourceMapping): string {
     const qBuilder = new GVQueryBuilder(
       this.config.knoraApiBaseUrl,
-      this.config.projectCode,
-      this.config.projectShortname,
+      rm.def.projectCode,
+      rm.def.projectShortname,
       new GVSrcClass(rm.def.name)
     );
     this.addVars(rm.attributes, qBuilder);
