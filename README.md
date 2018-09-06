@@ -4,7 +4,7 @@ This project provides a simple **O**bject **Knora** **M**apping for Typescript l
 
 ## Demo
 
-Requirements: a running Knora stack containing the Anything ontology with data. The default configuration point to http://0.0.0.0:3333 or can be changed in the [`environment.ts`](oknoram/src/environments/environment.ts) file.
+Requirements: a running Knora stack containing the Anything ontology with data. The default configuration point to http://0.0.0.0:3333 or can be changed in the [`environment.ts`](src/environments/environment.ts) file.
 
 - clone project
 - yarn
@@ -56,7 +56,7 @@ this.oknoramService.findAll<ThingModel>(
 
 The `Page<T>` interface provides a high level API to deal with the Knora API pagination.
 
-See source files [`app.component.ts`](oknoram/src/app/app.component.ts) and [`app.module.ts`](oknoram/src/app/app.module.ts).
+See source files [`app.component.ts`](src/app/app.component.ts) and [`app.module.ts`](src/app/app.module.ts).
 
 ## Implementation
 
