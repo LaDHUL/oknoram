@@ -1,7 +1,13 @@
 <p>Find all Things</p>
-<p>total: {{thingsCount$ | async}}</p>
-<p>page: {{pageIndex}}</p>
-<table *ngIf="thingsPage">
+<p>Total: {{thingsCount$ | async}}</p>
+<p *ngIf="thingsPage">
+  <label for="page">Page: </label>
+  <input id="page" type="number" min="0" max="{{thingsPage.totalCount/thingsPage.pageSize}}"
+    #page (change)="onPageIndex(page.value)"
+    value="0">
+</p>
+<p *ngIf="loading">Loading...</p>
+<table *ngIf="thingsPage && !loading">
   <tr>
     <th>#</th>
     <th>iri</th>
@@ -9,7 +15,7 @@
     <th>text</th>
   </tr>
   <tr *ngFor="let thing of thingsPage.content; let i = index">
-    <td>{{i+1}} {{thing | json}}</td>
+    <td>{{(pageIndex*thingsPage.pageSize)+i+1}}</td>
     <td>{{thing.id}}</td>
     <td>{{thing.label}}</td>
     <td>{{thing.text}}</td>

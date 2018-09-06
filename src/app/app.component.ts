@@ -29,16 +29,26 @@ export class AppComponent implements OnInit {
   thingsCount$: Observable<number>;
   thingsPage: Page<ThingModel>;
   pageIndex = 0;
+  loading = false;
 
   constructor(private oknoramService: OknoramService) {}
 
   ngOnInit() {
     this.thingsCount$ = this.oknoramService.count(ThingModel);
+    this.onPageIndex(0);
+  }
+
+  onPageIndex(pageIndex: number) {
+    this.pageIndex = pageIndex;
+    this.loading = true;
     this.oknoramService
       .findAll<ThingModel>(
         ThingModel,
         this.thingsPage ? this.thingsPage.pageRequest(this.pageIndex) : null
       )
-      .subscribe(page => (this.thingsPage = page));
+      .subscribe(page => {
+        this.loading = false;
+        this.thingsPage = page;
+      });
   }
 }
