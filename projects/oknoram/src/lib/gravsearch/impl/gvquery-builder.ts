@@ -5,8 +5,6 @@ export const ONTO_PREFIX = 'onto';
 
 export class GVQueryBuilder {
   private vars_: GVVar[] = [];
-  private unionVars_: GVVar[];
-  private unions_ = new Array<GVVar[]>();
   private orderByVar_: GVVar;
   private orderAscending_ = true;
 
@@ -90,17 +88,6 @@ ${this.varAType(v)} .
     return `?${s} a ${o}`;
   }
 
-  beginUnion() {
-    this.unionVars_ = [];
-    this.unions_.push(this.unionVars_);
-    return this;
-  }
-
-  endUnion() {
-    this.unionVars_ = null;
-    return this;
-  }
-
   srcClass() {
     return this.srcClass_;
   }
@@ -115,33 +102,18 @@ ${this.varAType(v)} .
     return this.orderBy(this.findVar(varName), orderAscending);
   }
 
-  orderByLastModification() {
-    // FIXME: should use lastModificationDate, missing properties in ontology #51
-    return this;
-  }
-
   var(var_: GVVar) {
-    if (this.unionVars_) {
-      this.unionVars_.push(var_);
-    } else {
-      this.vars_.push(var_);
-    }
+    this.vars_.push(var_);
     return this;
   }
 
   vars(vars: GVVar[]) {
-    if (this.unionVars_) {
-      this.unionVars_ = this.unionVars_.concat(vars);
-    } else {
-      this.vars_ = this.vars_.concat(vars);
-    }
+    this.vars_ = this.vars_.concat(vars);
     return this;
   }
 
   private findVar(varName: string) {
-    return this.unions_
-      .reduce((acc, value) => acc.concat(value), this.vars_)
-      .find((v: GVVar) => v.name === varName);
+    return this.vars_.find((v: GVVar) => v.name === varName);
   }
 
   query() {
@@ -154,7 +126,6 @@ PREFIX ${ONTO_PREFIX}: <${this.knoraApiBaseUrl}/ontology/${this.projectCode}/${
 CONSTRUCT {
   ?${this.srcClass_.subject} knora-api:isMainResource true .
   ${this.construct(this.vars_)}
-  ${this.unions_.map(vars => this.construct(vars)).join('\n')}
 } WHERE {
   ${
     this.srcClass_.ids_
@@ -179,7 +150,6 @@ CONSTRUCT {
       : ''
   }
   ${this.properties(this.vars_)}
-  ${this.unions_.map(vars => this.properties(vars, true)).join('\n')}
 
 }
 ${
