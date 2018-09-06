@@ -1,8 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { ReadResource } from '@knora/core';
-import { OknoramConfig } from 'oknoram/oknoram';
 import { ResourceMapping } from '../../mapping/resource-mapping';
-import { OknoramConfigToken } from '../../oknoram-config';
+import { OknoramConfig, OknoramConfigToken } from '../../oknoram-config';
 import { ConverterService } from '../converter.service';
 
 @Injectable({
