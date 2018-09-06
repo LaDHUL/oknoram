@@ -52,19 +52,4 @@ export class KnoraApiDefaultService implements KnoraApiService {
       query + (pageIndex ? ' OFFSET ' + pageIndex : '')
     );
   }
-
-  // protected getObjects<T>(
-  //   query: string,
-  //   converter: (resource: KResource) => T,
-  //   pageIndex: number
-  // ): Observable<T[]> {
-  //   return this.knoraV2Service.searchExtended(query, pageIndex).pipe(
-  //     concatMap((resources: KResource[]) => resources.map(converter)),
-  //     toArray()
-  //   );
-  // }
-
-  // protected getObjectsCount(query: string): Observable<number> {
-  //   return this.knoraV2Service.searchExtendedCount(query);
-  // }
 }
