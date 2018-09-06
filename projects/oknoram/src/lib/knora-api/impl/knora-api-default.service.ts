@@ -19,26 +19,52 @@ export class KnoraApiDefaultService implements KnoraApiService {
   ) {}
 
   countQuery(query: string): Observable<number> {
-    return this.http
-      .post(this.config.knoraApiBaseUrl + '/v2/searchextended/count', query)
-      .pipe(map(json => +json['schema:numberOfItems']));
+    return this.searchExtendedRequest(query, null, true).pipe(
+      map(json => +json['schema:numberOfItems'])
+    );
   }
 
-  executeQuery(query: string): Observable<ReadResource[]> {
-    return this.http
-      .post(this.config.knoraApiBaseUrl + '/v2/searchextended', query)
-      .pipe(
-        mergeMap(jsonldReturned =>
-          from(
-            jsonld.promises
-              .compact(jsonldReturned, {})
-              .then(
-                compacted =>
-                  ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted)
-                    .resources
-              )
-          )
+  executeQuery(query: string, pageIndex = null): Observable<ReadResource[]> {
+    return this.searchExtendedRequest(query, pageIndex).pipe(
+      mergeMap(jsonldReturned =>
+        from(
+          jsonld.promises
+            .compact(jsonldReturned, {})
+            .then(
+              compacted =>
+                ConvertJSONLD.createReadResourcesSequenceFromJsonLD(compacted)
+                  .resources
+            )
         )
-      );
+      )
+    );
   }
+
+  private searchExtendedRequest(
+    query: string,
+    pageIndex?: number,
+    count = false
+  ) {
+    return this.http.post(
+      this.config.knoraApiBaseUrl +
+        '/v2/searchextended' +
+        (count ? '/count' : ''),
+      query + (pageIndex ? ' OFFSET ' + pageIndex : '')
+    );
+  }
+
+  // protected getObjects<T>(
+  //   query: string,
+  //   converter: (resource: KResource) => T,
+  //   pageIndex: number
+  // ): Observable<T[]> {
+  //   return this.knoraV2Service.searchExtended(query, pageIndex).pipe(
+  //     concatMap((resources: KResource[]) => resources.map(converter)),
+  //     toArray()
+  //   );
+  // }
+
+  // protected getObjectsCount(query: string): Observable<number> {
+  //   return this.knoraV2Service.searchExtendedCount(query);
+  // }
 }

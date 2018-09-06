@@ -12,8 +12,6 @@ export class ConverterReadresourceService implements ConverterService {
   constructor(@Inject(OknoramConfigToken) private config: OknoramConfig) {}
 
   convert<T>(rm: ResourceMapping, res: ReadResource): T {
-    console.log(res);
-
     const obj = {};
     obj[rm.iri] = res.id;
     if (rm.label) {

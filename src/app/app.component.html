@@ -7,7 +7,7 @@
     <th>text</th>
   </tr>
   <tr *ngFor="let thing of things$ | async; let i = index">
-    <td>{{i}}</td>
+    <td>{{i+1}}</td>
     <td>{{thing.id}}</td>
     <td>{{thing.label}}</td>
     <td>{{thing.text}}</td>
