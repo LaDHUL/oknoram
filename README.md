@@ -62,9 +62,17 @@ See source files [`app.component.ts`](src/app/app.component.ts) and [`app.module
 
 How does it work?
 
-- At initialization, the mapping is extracted from Typescript [`Decorators`](https://www.typescriptlang.org/docs/handbook/decorators.html)
+- At initialization, the mapping is extracted from Typescript [`Decorator`](https://www.typescriptlang.org/docs/handbook/decorators.html): [see implementation](src/lib/mapping)
 
-- On `OknoramService.findAll<T>(class)` call, we execute the following process:
-  1. we generate the `gravsearch` query of the required class from the mapping
-  2. we execute the query with the `search extended` Knora API
-  3. we convert the `json-ld` result into the instances of the required class
+- On [`OknoramService`](projects/oknoram/src/lib/core/oknoram.service.ts) call, we execute the following process:
+  1. we generate the `gravsearch` query of the required class from the mapping ([`GravsearchService`](projects/oknoram/src/lib/gravsearch/gravsearch.service.ts))
+  2. we execute the query with the `search extended` Knora API ([`KnoraApiService`](projects/oknoram/src/lib/knora-api/knora-api.service.ts))
+  3. we convert the `json-ld` result into the instances of the required class ([`ConverterService`](projects/oknoram/src/lib/converter/converter.service.ts))
+
+- Default implementation of services (configuration: [`OknoramModule`](projects/oknoram/src/lib/oknoram.module.ts))
+  - `OknoramService`: [`OknoramDefaultService`](projects/oknoram/src/lib/core/impl/oknoram-default.service.ts)
+  - `GravsearchService`: [`GravsearchGvqueryService`](projects/oknoram/src/lib/gravsearch/impl/gravsearch-gvquery.service.ts)
+  - `KnoraApiService`: [`KnoraApiDefaultService`](projects/oknoram/src/lib/knora-api/impl/knora-api-default.service.ts)
+  - `ConverterService`: [`ConverterReadresourceService`](projects/oknoram/src/lib/converter/impl/converter-readresource.service.ts)
+
+
