@@ -8,6 +8,7 @@ Requirements: a running Knora stack containing the Anything ontology with data.T
 
 - clone project
 - yarn
+- ng build oknoram
 - ng s --port 4666
 - http://localhost:4666/
 
