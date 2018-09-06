@@ -1,27 +1,67 @@
-# OknoramApp
+# oknoram
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.2.
+This project provides a simple **O**bject **Knora** **M**apping for Typescript language in a Angular app. Like [**ORM**](https://fr.wikipedia.org/wiki/Mapping_objet-relationnel) tools that simplify the link between the **Object Oriented** and **Relational** worlds, this library try to simplify the link between the **Object Oriented** and **Web semantic Knora** worlds.
 
-## Development server
+## Demo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Requirements: a running Knora stack containing the Anything ontology with data.The default configuration point to http://0.0.0.0:3333 or can be changed in the `environment.ts` file.
 
-## Code scaffolding
+- clone project
+- yarn
+- ng s --port 4666
+- http://localhost:4666/
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Purpose of the demonstration
 
-## Build
+We start by defining the mapping of a `Thing` resource to a `ThingModel` Typescript class (here, we just want to get the `iri`, `label` and `hasText` properties:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```typescript
+@Resource({ name: 'Thing' })
+export class ThingModel {
+  @Iri
+  id: string;
+  @Label
+  label: string;
+  @Property({ type: PropertyType.TextValue, name: 'hasText', optional: true })
+  text: string;
+}
+```
 
-## Running unit tests
+We configure the module:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```typescript
+OknoramModule.forRoot({
+  knoraApiBaseUrl: environment.knoraApiBaseUrl,
+  projectCode: environment.projectCode,
+  projectShortname: environment.projectShortname
+} as OknoramConfig);
+```
 
-## Running end-to-end tests
+We get resources:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```typescript
+thingsPage: Page<ThingModel>;
+pageIndex = 0;
 
-## Further help
+constructor(private oknoramService: OknoramService) {}
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+[...]
+
+this.oknoramService.findAll<ThingModel>(
+  ThingModel,
+  this.thingsPage ? this.thingsPage.pageRequest(this.pageIndex) : null
+  ).subscribe(page => this.thingsPage = page);
+```
+
+The `Page<T>` interface provides a high level API to deal with the Knora API pagination.
+
+## Implementation
+
+How does it work?
+
+- At initialization, the mapping is extracted from Typescript [`Decorators`](https://www.typescriptlang.org/docs/handbook/decorators.html)
+
+- On `OknoramService.findAll<T>(class)` call, we execute the following process:
+  1. we generate the `gravsearch` query of the required class from the mapping
+  2. we execute the query with the `search extended` Knora API
+  3. we convert the `json-ld` result into the instances of the required class
