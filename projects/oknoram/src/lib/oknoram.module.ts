@@ -17,7 +17,7 @@ import { OknoramConfig, OknoramConfigToken } from './oknoram-config';
 export class OknoramModule {
   static forRoot(config: OknoramConfig): ModuleWithProviders {
     KuiCoreModule.forRoot({
-      name: 'Knora-ui-test',
+      name: '',
       api: config.knoraApiBaseUrl,
       media: '',
       app: ''
