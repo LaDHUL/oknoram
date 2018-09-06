@@ -62,7 +62,7 @@ See source files [`app.component.ts`](src/app/app.component.ts) and [`app.module
 
 How does it work?
 
-- At initialization, the mapping is extracted from Typescript [`Decorator`](https://www.typescriptlang.org/docs/handbook/decorators.html): [see implementation](src/lib/mapping)
+- At initialization, the mapping is extracted from Typescript [`Decorator`](https://www.typescriptlang.org/docs/handbook/decorators.html): [see implementation](projects/oknoram/src/lib/mapping)
 
 - On [`OknoramService`](projects/oknoram/src/lib/core/oknoram.service.ts) call, we execute the following process:
   1. we generate the `gravsearch` query of the required class from the mapping ([`GravsearchService`](projects/oknoram/src/lib/gravsearch/gravsearch.service.ts))
