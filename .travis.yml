@@ -3,3 +3,13 @@ node_js:
   - node
 script:
   - yarn build-ci
+
+sudo: required
+addons:
+  chrome: stable
+language: node_js
+node_js:
+- node
+script:
+- yarn test-ci
+- yarn build-ci
