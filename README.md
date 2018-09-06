@@ -2,6 +2,8 @@
 
 This project provides a simple **O**bject **Knora** **M**apping for Typescript language in a Angular app. Like [**ORM**](https://fr.wikipedia.org/wiki/Mapping_objet-relationnel) tools that simplify the link between the **Object Oriented** and **Relational** worlds, this library try to simplify the link between the **Object Oriented** and **Web semantic Knora** worlds.
 
+(Highly inspired from [Spring Data Framework](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/))
+
 ## Demo
 
 Requirements: a running Knora stack containing the Anything ontology with data. The default configuration point to http://0.0.0.0:3333 or can be changed in the [`environment.ts`](src/environments/environment.ts) file.
