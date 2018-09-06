@@ -3,6 +3,7 @@ import {
   Iri,
   Label,
   OknoramService,
+  Page,
   Property,
   PropertyType,
   Resource
@@ -10,13 +11,11 @@ import {
 import { Observable } from 'rxjs';
 
 @Resource({ name: 'Thing' })
-export class Thing {
+export class ThingModel {
   @Iri
   id: string;
-
   @Label
   label: string;
-
   @Property({ type: PropertyType.TextValue, name: 'hasText', optional: true })
   text: string;
 }
@@ -27,14 +26,19 @@ export class Thing {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'oknoram-app';
   thingsCount$: Observable<number>;
-  things$: Observable<Thing[]>;
+  thingsPage: Page<ThingModel>;
+  pageIndex = 0;
 
   constructor(private oknoramService: OknoramService) {}
 
   ngOnInit() {
-    this.thingsCount$ = this.oknoramService.count(Thing);
-    this.things$ = this.oknoramService.findAll<Thing>(Thing);
+    this.thingsCount$ = this.oknoramService.count(ThingModel);
+    this.oknoramService
+      .findAll<ThingModel>(
+        ThingModel,
+        this.thingsPage ? this.thingsPage.pageRequest(this.pageIndex) : null
+      )
+      .subscribe(page => (this.thingsPage = page));
   }
 }

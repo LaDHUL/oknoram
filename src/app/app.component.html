@@ -1,13 +1,15 @@
-<p>Things: (total={{thingsCount$ | async}})</p>
-<table>
+<p>Find all Things</p>
+<p>total: {{thingsCount$ | async}}</p>
+<p>page: {{pageIndex}}</p>
+<table *ngIf="thingsPage">
   <tr>
     <th>#</th>
     <th>iri</th>
     <th>label</th>
     <th>text</th>
   </tr>
-  <tr *ngFor="let thing of things$ | async; let i = index">
-    <td>{{i+1}}</td>
+  <tr *ngFor="let thing of thingsPage.content; let i = index">
+    <td>{{i+1}} {{thing | json}}</td>
     <td>{{thing.id}}</td>
     <td>{{thing.label}}</td>
     <td>{{thing.text}}</td>
