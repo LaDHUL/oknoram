@@ -1,18 +1,15 @@
 import { inject, TestBed } from '@angular/core/testing';
-import { PropertyDef } from 'oknoram/lib/mapping/property-def';
 import { KnoraResource } from '../../knora-api/knora-resource';
+import { PropertyDef } from '../../mapping/property-def';
 import { ResourceMapping } from '../../mapping/resource-mapping';
 import { OknoramConfig, OknoramConfigToken } from '../../oknoram-config';
+import { OknoramConfigStub } from '../../test/helpers';
 import { ConverterReadresourceService } from './converter-readresource.service';
 
 export class TestModel {
   iriVar: string;
   labelVar: string;
   strVar: string;
-}
-
-export class OknoramConfigStub implements OknoramConfig {
-  knoraApiBaseUrl = 'knoraApiBaseUrl';
 }
 
 describe('ConverterReadresourceService', () => {
@@ -36,14 +33,6 @@ describe('ConverterReadresourceService', () => {
     (service: ConverterReadresourceService) => {
       expect(service).toBeTruthy();
       expect(service instanceof ConverterReadresourceService).toBeTruthy();
-    }
-  ));
-
-  it('OknoramConfig#knoraApiBaseUrl should return stubbed value from a spy', inject(
-    [OknoramConfigToken],
-    (oknoramConfig: OknoramConfig) => {
-      expect(oknoramConfig).toBeTruthy();
-      expect(oknoramConfig.knoraApiBaseUrl).toBe('knoraApiBaseUrl');
     }
   ));
 
