@@ -1,15 +1,14 @@
 import { inject, TestBed } from '@angular/core/testing';
-import { ReadResource, ReadTextValueAsString } from '@knora/core';
 import { PropertyDef } from 'oknoram/lib/mapping/property-def';
-import { PropertyType } from '../../mapping/property-type';
+import { KnoraResource } from '../../knora-api/knora-resource';
 import { ResourceMapping } from '../../mapping/resource-mapping';
 import { OknoramConfig, OknoramConfigToken } from '../../oknoram-config';
 import { ConverterReadresourceService } from './converter-readresource.service';
 
 export class TestModel {
-  iriValue: string;
-  labelValue: string;
-  strValue: string;
+  iriVar: string;
+  labelVar: string;
+  strVar: string;
 }
 
 export class OknoramConfigStub implements OknoramConfig {
@@ -51,36 +50,29 @@ describe('ConverterReadresourceService', () => {
   it('should convert', inject(
     [ConverterReadresourceService, OknoramConfigToken],
     (service: ConverterReadresourceService, oknoramConfig: OknoramConfig) => {
-      const rm = new ResourceMapping(TestModel);
-      rm.iri = 'iriValue';
-      rm.label = 'labelValue';
-      rm.propertyMapping('strValue', {
-        type: PropertyType.TextValue,
-        name: null,
+      const propRef = {
+        type: null,
+        name: 'strOntoVar',
         optional: false
-      } as PropertyDef);
+      } as PropertyDef;
 
-      spyOn(service, 'getAttFullName').and.returnValue('varName');
+      const rm = new ResourceMapping(TestModel);
+      rm.iri = 'iriVar';
+      rm.label = 'labelVar';
+      rm.propertyMapping('strVar', propRef);
 
-      const propValue = new ReadTextValueAsString(null, null, 'value');
       const res = {
         id: 'iri',
         label: 'label',
-        properties: {
-          varName: [propValue]
-        },
-        type: null,
-        incomingRegions: null,
-        incomingStillImageRepresentations: null,
-        incomingLinks: null,
-        stillImageRepresentationsToDisplay: null
-      } as ReadResource;
+        properties: new Map<string, any>().set('strOntoVar', 'value')
+      } as KnoraResource;
 
       const converted = service.convert<TestModel>(rm, res);
+
       expect(converted).toBeTruthy();
-      expect(converted.iriValue).toBe(res.id);
-      expect(converted.labelValue).toBe(res.label);
-      expect(converted.strValue).toBe(propValue.getContent());
+      expect(converted.iriVar).toBe('iri');
+      expect(converted.labelVar).toBe('label');
+      expect(converted.strVar).toBe('value');
     }
   ));
 });
