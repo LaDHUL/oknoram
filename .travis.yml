@@ -1,4 +1,4 @@
-#sudo: required
+sudo: required
 addons:
   chrome: stable
 language: node_js
