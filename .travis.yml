@@ -2,10 +2,10 @@ sudo: required
 #addons:
 #  chrome: stable
 language: node_js
-node_js:
-  - 8
 cache:
   yarn: true
+before_install:
+  - sudo npm install -g node-gyp
 script:
   - yarn test-ci
   - yarn build-ci
