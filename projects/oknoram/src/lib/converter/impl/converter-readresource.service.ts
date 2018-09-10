@@ -1,15 +1,12 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { KnoraResource } from '../../knora-api/knora-resource';
 import { ResourceMapping } from '../../mapping/resource-mapping';
-import { OknoramConfig, OknoramConfigToken } from '../../oknoram-config';
 import { ConverterService } from '../converter.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConverterReadresourceService implements ConverterService {
-  constructor(@Inject(OknoramConfigToken) private config: OknoramConfig) {}
-
   convert<T>(rm: ResourceMapping, res: KnoraResource): T {
     const obj = {};
     obj[rm.iri] = res.id;
