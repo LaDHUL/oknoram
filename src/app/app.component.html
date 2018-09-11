@@ -1,5 +1,7 @@
 <p>Find all Things</p>
 <p>Total: {{thingsCount$ | async}}</p>
+<p>First thing:</p>
+<p *ngIf="firstThing">{{firstThing | json}}</p>
 <p *ngIf="thingsPage">
   <label for="page">Page: </label>
   <input id="page"
