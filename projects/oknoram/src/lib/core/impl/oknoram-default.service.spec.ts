@@ -3,13 +3,14 @@ import { ConverterService } from '../../converter/converter.service';
 import { GravsearchService } from '../../gravsearch/gravsearch.service';
 import { TestModel } from '../../knora-api/impl/knora-api-default.service.spec';
 import { KnoraApiService } from '../../knora-api/knora-api.service';
+import { OknoramService } from '../oknoram.service';
 import { OknoramDefaultService } from './oknoram-default.service';
 
 describe('OknoramDefaultService', () => {
   let gravsearchServiceSpy: jasmine.SpyObj<GravsearchService>;
   let knoraApiServiceSpy: jasmine.SpyObj<KnoraApiService>;
   let converterServiceSpy: jasmine.SpyObj<ConverterService>;
-  let oknoramService: OknoramDefaultService;
+  let oknoramService: OknoramService;
 
   beforeEach(() => {
     gravsearchServiceSpy = jasmine.createSpyObj('GravsearchService', [
@@ -81,5 +82,45 @@ describe('OknoramDefaultService', () => {
     expect(knoraApiServiceSpy.countQuery.calls.count()).toBe(1);
     expect(knoraApiServiceSpy.executeQuery.calls.count()).toBe(2);
     expect(converterServiceSpy.convert.calls.count()).toBe(3);
+  });
+
+  it('should return TestModel resource of specified id', () => {
+    const tm = {
+      iriVar: 'iriVar',
+      labelVar: 'labelVar',
+      strVar: 'strVar'
+    } as TestModel;
+    knoraApiServiceSpy.executeQuery.and.returnValue(of([{}]));
+    converterServiceSpy.convert.and.returnValue(tm);
+    oknoramService.findById<TestModel>(TestModel, 'id').subscribe(obj => {
+      expect(obj).toBeTruthy();
+      expect(obj).toEqual(tm);
+    }, fail);
+    expect(knoraApiServiceSpy.executeQuery.calls.count()).toBe(1);
+    expect(converterServiceSpy.convert.calls.count()).toBe(1);
+  });
+
+  it('should throw exception of several resources of specified id', () => {
+    const tm = {
+      iriVar: 'iriVar',
+      labelVar: 'labelVar',
+      strVar: 'strVar'
+    } as TestModel;
+    knoraApiServiceSpy.executeQuery.and.returnValue(of([{}, {}]));
+    converterServiceSpy.convert.and.returnValue(tm);
+    oknoramService
+      .findById<TestModel>(TestModel, 'id')
+      .subscribe(obj => {}, error => expect(error).toBeTruthy());
+    expect(knoraApiServiceSpy.executeQuery.calls.count()).toBe(1);
+    expect(converterServiceSpy.convert.calls.count()).toBe(2);
+  });
+
+  it('should return null of unknown id', () => {
+    knoraApiServiceSpy.executeQuery.and.returnValue(of([]));
+    oknoramService.findById<TestModel>(TestModel, 'id').subscribe(obj => {
+      expect(obj).toBeNull();
+    }, fail);
+    expect(knoraApiServiceSpy.executeQuery.calls.count()).toBe(1);
+    expect(converterServiceSpy.convert.calls.count()).toBe(0);
   });
 });

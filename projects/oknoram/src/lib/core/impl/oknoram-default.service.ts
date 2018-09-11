@@ -26,6 +26,28 @@ export class OknoramDefaultService implements OknoramService {
     return this.knoraApiService.countQuery(query);
   }
 
+  findById<T>(classTarget, id: string): Observable<T> {
+    const rm = OntologyMapping.mapping().resourceMapping(classTarget);
+    const query = this.gravsearchService.buildQuery(rm, [id]);
+    return this.getObjects<T>(query, rm, 0).pipe(
+      switchMap((res: T[]) => {
+        if (!res || res.length <= 0) {
+          return of(null);
+        } else if (res.length > 1) {
+          return Observable.throw(
+            new Error(
+              `Found several resources (${
+                res.length
+              }) for the specified id: ${id}`
+            )
+          );
+        } else {
+          return of(res[0]);
+        }
+      })
+    );
+  }
+
   findAll<T>(classTarget, pageRequest?: PageRequest): Observable<Page<T>> {
     const rm = OntologyMapping.mapping().resourceMapping(classTarget);
     const query = this.gravsearchService.buildQuery(rm);
