@@ -18,12 +18,12 @@ export const TypeMapping = new Map<PropertyType, string>([
 export class GravsearchGvqueryService implements GravsearchService {
   constructor(@Inject(OknoramConfigToken) private config: OknoramConfig) {}
 
-  buildQuery(rm: ResourceMapping): string {
+  buildQuery(rm: ResourceMapping, ids?: string[]): string {
     const qBuilder = new GVQueryBuilder(
       this.config.knoraApiBaseUrl,
       rm.def.projectCode,
       rm.def.projectShortname,
-      new GVSrcClass(rm.def.name)
+      new GVSrcClass(rm.def.name).ids(ids)
     );
     this.addVars(rm.attributes, qBuilder);
     return qBuilder.query();
