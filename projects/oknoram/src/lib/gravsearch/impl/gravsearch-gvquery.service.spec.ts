@@ -10,13 +10,13 @@ function flatQuery(q: string) {
 
 describe('GravsearchGvqueryService', () => {
   let gravsearchService: GravsearchGvqueryService;
-  let conf = new OknoramConfigStub();
+  const conf = new OknoramConfigStub();
 
   beforeEach(() => {
     gravsearchService = new GravsearchGvqueryService(conf);
   });
 
-  it('should be created', () => {
+  it('should generate the gravsearch query of TestModel mapping', () => {
     const rm = makeResourceMapping();
     const resQuery = `
 PREFIX knora-api: <http://api.knora.org/ontology/knora-api/simple/v2#>
