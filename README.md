@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gfoo/oknoram.svg?branch=develop)](https://travis-ci.org/gfoo/oknoram)
+[![Build Status](https://travis-ci.org/LaDHUL/oknoram.svg?branch=develop)](https://travis-ci.org/LaDHUL/oknoram)
 
 
 # oknoram
