@@ -40,7 +40,14 @@ export class OknoramDefaultService implements OknoramService {
                 ? of(new Page<T>(0, 0, 0, []))
                 : this.getObjects<T>(query, rm, 0).pipe(
                     switchMap((res: T[]) =>
-                      of(new Page<T>(0, count, res.length, res))
+                      of(
+                        new Page<T>(
+                          0,
+                          count,
+                          Math.round(count / res.length),
+                          res
+                        )
+                      )
                     )
                   )
           )
@@ -52,7 +59,7 @@ export class OknoramDefaultService implements OknoramService {
             new Page<T>(
               pageRequest.pageIndex,
               pageRequest.totalCount,
-              pageRequest.pageSize,
+              pageRequest.pageCount,
               res
             )
           )

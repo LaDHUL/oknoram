@@ -6,10 +6,10 @@ export class Page<T> extends PageRequest {
   constructor(
     pageIndex: number,
     totalCount: number,
-    pageSize: number,
+    pageCount: number,
     content: T[]
   ) {
-    super(pageIndex, totalCount, pageSize);
+    super(pageIndex, totalCount, pageCount);
     this.content_ = content;
   }
 
@@ -18,6 +18,6 @@ export class Page<T> extends PageRequest {
   }
 
   pageRequest(index: number): PageRequest {
-    return new PageRequest(index, this.totalCount_, this.pageSize);
+    return new PageRequest(index, this.totalCount_, this.pageCount);
   }
 }
