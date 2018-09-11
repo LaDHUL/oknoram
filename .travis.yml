@@ -1,13 +1,22 @@
-sudo: required
-addons:
-  chrome: stable
+#sudo: required
 language: node_js
 node_js:
   - 10
+addons:
+  chrome: stable
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
 cache:
   yarn: true
 before_install:
-  - npm install -g node-gyp
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+
+install:
+  - CC=gcc-4.9 CXX=g++-4.9 yarn
 script:
-  - yarn test-ci
-  - yarn build-ci
+  - yarn test-lib-ci
+  - yarn build-lib-ci

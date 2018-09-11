@@ -66,7 +66,7 @@ export class OknoramDefaultService implements OknoramService {
     rm: ResourceMapping,
     pageIndex: number
   ): Observable<T[]> {
-    return this.knoraApiService.executeQuery(query, pageIndex).pipe(
+    return this.knoraApiService.executeQuery(query, rm, pageIndex).pipe(
       concatAll(),
       map(res => this.converterService.convert<T>(rm, res)),
       toArray()
