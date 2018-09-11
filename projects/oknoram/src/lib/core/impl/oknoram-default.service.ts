@@ -53,27 +53,26 @@ export class OknoramDefaultService implements OknoramService {
     const query = this.gravsearchService.buildQuery(rm);
 
     if (!pageRequest) {
-      return this.knoraApiService
-        .countQuery(query)
-        .pipe(
-          switchMap(
-            count =>
-              count <= 0
-                ? of(new Page<T>(0, 0, 0, []))
-                : this.getObjects<T>(query, rm, 0).pipe(
-                    switchMap((res: T[]) =>
-                      of(
-                        new Page<T>(
-                          0,
-                          count,
-                          Math.round(count / res.length),
-                          res
-                        )
+      return this.knoraApiService.countQuery(query).pipe(
+        switchMap(
+          count =>
+            count <= 0
+              ? of(new Page<T>(0, 0, 0, []))
+              : this.getObjects<T>(query, rm, 0).pipe(
+                  switchMap((res: T[]) =>
+                    of(
+                      new Page<T>(
+                        0,
+                        count,
+                        // first call to infer page size = res.length
+                        Math.round(count / res.length),
+                        res
                       )
                     )
                   )
-          )
-        );
+                )
+        )
+      );
     } else {
       return this.getObjects<T>(query, rm, pageRequest.pageIndex).pipe(
         switchMap((res: T[]) =>
