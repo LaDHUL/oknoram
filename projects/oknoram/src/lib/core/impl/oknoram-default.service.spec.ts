@@ -41,7 +41,6 @@ describe('OknoramDefaultService', () => {
     oknoramService.findAll<TestModel>(TestModel).subscribe(page => {
       expect(page.totalCount).toBe(0);
       expect(page.pageIndex).toBe(0);
-      expect(page.pageCount).toBe(0);
       expect(page.content.length).toBe(0);
       expect(page.content).toEqual([]);
     }, fail);
@@ -63,7 +62,6 @@ describe('OknoramDefaultService', () => {
     oknoramService.findAll<TestModel>(TestModel).subscribe(page => {
       expect(page.totalCount).toBe(3);
       expect(page.pageIndex).toBe(0);
-      expect(page.pageCount).toBe(2);
       expect(page.content.length).toBe(2);
       expect(page.content).toEqual([tm, tm]);
 
@@ -73,7 +71,6 @@ describe('OknoramDefaultService', () => {
         .subscribe(nextPage => {
           expect(nextPage.totalCount).toBe(3);
           expect(nextPage.pageIndex).toBe(1);
-          expect(nextPage.pageCount).toBe(2);
           expect(nextPage.content.length).toBe(1);
           expect(nextPage.content).toEqual([tm]);
         }, fail);
