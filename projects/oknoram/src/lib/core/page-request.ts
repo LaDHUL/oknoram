@@ -1,16 +1,10 @@
 export class PageRequest {
   private pageIndex_: number;
   protected totalCount_: number;
-  protected pageCount_: number;
 
-  protected constructor(
-    pageIndex: number,
-    totalCount: number,
-    pageCount: number
-  ) {
+  protected constructor(pageIndex: number, totalCount: number) {
     this.pageIndex_ = pageIndex;
     this.totalCount_ = totalCount;
-    this.pageCount_ = pageCount;
   }
 
   get pageIndex(): number {
@@ -19,9 +13,5 @@ export class PageRequest {
 
   get totalCount(): number {
     return this.totalCount_;
-  }
-
-  get pageCount(): number {
-    return this.pageCount_;
   }
 }

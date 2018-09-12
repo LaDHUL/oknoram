@@ -3,13 +3,8 @@ import { PageRequest } from './page-request';
 export class Page<T> extends PageRequest {
   private content_: T[];
 
-  constructor(
-    pageIndex: number,
-    totalCount: number,
-    pageCount: number,
-    content: T[]
-  ) {
-    super(pageIndex, totalCount, pageCount);
+  constructor(pageIndex: number, totalCount: number, content: T[]) {
+    super(pageIndex, totalCount);
     this.content_ = content;
   }
 
@@ -18,6 +13,6 @@ export class Page<T> extends PageRequest {
   }
 
   pageRequest(index: number): PageRequest {
-    return new PageRequest(index, this.totalCount_, this.pageCount);
+    return new PageRequest(index, this.totalCount_);
   }
 }
