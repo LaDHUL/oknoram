@@ -31,9 +31,6 @@ describe('KnoraApiDefaultService', () => {
   });
 
   it('should return expected resource', () => {
-    spyOn<any>(knoraApiService, 'uncompactPropName').and.returnValue(
-      'uncompactedPropStr'
-    );
     spyOn<any>(knoraApiService, 'json2ReadResources').and.returnValue(
       of([
         {
@@ -54,8 +51,13 @@ describe('KnoraApiDefaultService', () => {
     knoraApiService.executeQuery('query', null).subscribe(res => {
       expect(res[0].id).toBe('id');
       expect(res[0].label).toBe('label');
-      expect(res[0].properties.has('uncompactedPropStr')).toBeTruthy();
-      expect(res[0].properties.get('uncompactedPropStr')).toBe('propStrValue');
+      expect(res[0].properties['propStr']).toBeTruthy();
+      expect(res[0].properties['propStr'][0]).toEqual(
+        jasmine.any(ReadTextValueAsString)
+      );
+      expect((<ReadTextValueAsString>res[0].properties['propStr'][0]).str).toBe(
+        'propStrValue'
+      );
     }, fail);
     expect(httpClientSpy.post.calls.count()).toBe(1);
   });

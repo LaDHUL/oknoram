@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ReadResource } from '@knora/core';
 import { Observable, of } from 'rxjs';
 import { concatAll, map, switchMap, toArray } from 'rxjs/operators';
 import { ConverterService } from '../../converter/converter.service';
@@ -79,9 +80,9 @@ export class OknoramDefaultService implements OknoramService {
     rm: ResourceMapping,
     pageIndex: number
   ): Observable<T[]> {
-    return this.knoraApiService.executeQuery(query, rm, pageIndex).pipe(
+    return this.knoraApiService.executeQuery(query, pageIndex).pipe(
       concatAll(),
-      map(res => this.converterService.convert<T>(rm, res)),
+      map((res: ReadResource) => this.converterService.convert<T>(rm, res)),
       toArray()
     );
   }

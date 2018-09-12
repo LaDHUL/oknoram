@@ -1,5 +1,6 @@
 <p>findById(...) :</p>
-<p *ngIf="firstThing">{{firstThing | json}}</p>
+<p *ngIf="firstThing">id={{firstThing.id}}
+  label={{firstThing.label}}</p>
 <hr>
 <p>findAll(...) - total count: {{thingsCount$ |
   async}} -
@@ -27,10 +28,10 @@
   <tr *ngFor="let thing of thingsPage.content">
     <td>{{thing.id}}</td>
     <td>{{thing.label}}</td>
-    <td>{{thing.text}}</td>
-    <td>{{thing.boolean}}</td>
-    <td>{{thing.integer}}</td>
-    <td>{{thing.decimal}}</td>
-    <td>{{thing.otherThingId}}</td>
+    <td>{{thing.text?.str}}</td>
+    <td>{{thing.boolean?.bool}}</td>
+    <td>{{thing.integer?.integer}}</td>
+    <td>{{thing.decimal?.decimal}}</td>
+    <td>{{thing.otherThing?.id}}</td>
   </tr>
 </table>

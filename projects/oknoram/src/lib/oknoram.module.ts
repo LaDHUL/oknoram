@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { KuiCoreModule } from '@knora/core';
 import { ConverterService } from './converter/converter.service';
-import { ConverterReadresourceService } from './converter/impl/converter-readresource.service';
+import { ConverterReadResourceService } from './converter/impl/converter-read-resource.service';
 import { OknoramDefaultService } from './core/impl/oknoram-default.service';
 import { OknoramService } from './core/oknoram.service';
 import { GravsearchService } from './gravsearch/gravsearch.service';
@@ -29,7 +29,7 @@ export class OknoramModule {
         { provide: OknoramService, useClass: OknoramDefaultService },
         { provide: GravsearchService, useClass: GravsearchGvqueryService },
         { provide: KnoraApiService, useClass: KnoraApiDefaultService },
-        { provide: ConverterService, useClass: ConverterReadresourceService }
+        { provide: ConverterService, useClass: ConverterReadResourceService }
       ]
     };
   }

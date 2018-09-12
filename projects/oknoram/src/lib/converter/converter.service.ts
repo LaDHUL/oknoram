@@ -1,6 +1,6 @@
-import { KnoraResource } from '../knora-api/knora-resource';
+import { ReadResource } from '@knora/core';
 import { ResourceMapping } from '../mapping/resource-mapping';
 
 export abstract class ConverterService {
-  abstract convert<T>(rm: ResourceMapping, res: KnoraResource): T;
+  abstract convert<T>(rm: ResourceMapping, res: ReadResource): T;
 }

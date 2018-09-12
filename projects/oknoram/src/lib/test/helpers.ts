@@ -1,4 +1,8 @@
-import { KnoraResource } from '../knora-api/knora-resource';
+import {
+  KnoraConstants,
+  ReadResource,
+  ReadTextValueAsString
+} from '@knora/core';
 import { PropertyDef } from '../mapping/property-def';
 import { PropertyType } from '../mapping/property-type';
 import { ResourceDef } from '../mapping/resource-def';
@@ -12,7 +16,7 @@ export class OknoramConfigStub implements OknoramConfig {
 export class TestModel {
   iriVar: string;
   labelVar: string;
-  strVar: string;
+  strVar: ReadTextValueAsString;
 }
 
 export function makeResourceMapping(): ResourceMapping {
@@ -34,11 +38,19 @@ export function makeResourceMapping(): ResourceMapping {
   return rm;
 }
 
-export function makeKnoraResource(): KnoraResource {
-  const res = {
+export function makeReadResource(): ReadResource {
+  return {
     id: 'iri',
+    type: KnoraConstants.ReadTextValueAsString,
     label: 'label',
-    properties: new Map<string, any>().set('strOntoVar', 'value')
-  } as KnoraResource;
-  return res;
+    incomingRegions: null,
+    incomingStillImageRepresentations: null,
+    stillImageRepresentationsToDisplay: null,
+    incomingLinks: null,
+    properties: {
+      'knoraApiBaseUrl/ontology/projectCode/projectShortname/v2#strOntoVar': [
+        new ReadTextValueAsString(null, null, 'value')
+      ]
+    }
+  } as ReadResource;
 }
