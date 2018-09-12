@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/LaDHUL/oknoram.svg?branch=develop)](https://travis-ci.org/LaDHUL/oknoram)
 
-
 # oknoram
 
 This project provides a simple **O**bject **Knora** **M**apping for Typescript language in a Angular app. Like [**ORM**](https://fr.wikipedia.org/wiki/Mapping_objet-relationnel) tools that simplify the link between the **Object Oriented** and **Relational** worlds, this library try to simplify the link between the **Object Oriented** and **Web semantic Knora** worlds.
@@ -33,7 +32,8 @@ export class ThingModel {
   @Label
   label: string;
   @Property({ type: PropertyType.TextValue, name: 'hasText', optional: true })
-  text: string;
+  text: ReadTextValueAsString;
+  [...]
 }
 ```
 
@@ -45,15 +45,24 @@ We configure the module:
   imports: [
     [...]
     OknoramModule.forRoot({
-      knoraApiBaseUrl: environment.knoraApiBaseUrl,
-      projectCode: environment.projectCode,
-      projectShortname: environment.projectShortname
-    } as OknoramConfig)
-  ],
+      knoraApiBaseUrl: environment.knoraApiBaseUrl
+    } as OknoramConfig)  ],
 [...]
 ```
 
-We get resources:
+We can count resources:
+
+```typescript
+thingsCount$: Observable<number>;
+
+constructor(private oknoramService: OknoramService) {}
+
+[...]
+
+this.thingsCount$ = this.oknoramService.count(ThingModel);
+```
+
+We can get resources:
 
 ```typescript
 thingsPage: Page<ThingModel>;
@@ -71,7 +80,22 @@ this.oknoramService.findAll<ThingModel>(
 
 The `Page<T>` interface provides a high level API to deal with the Knora API pagination.
 
-See source files [`app.component.ts`](src/app/app.component.ts) and [`app.module.ts`](src/app/app.module.ts).
+We can get a particular resource by id:
+
+```typescript
+aThing: ThingModel;
+id = 'KNORA IRI';
+
+constructor(private oknoramService: OknoramService) {}
+
+[...]
+
+this.oknoramService
+  .findById<ThingModel>(ThingModel, id)
+  .subscribe(res => (this.aThing = res));
+```
+
+See source files [`app.component.ts`](src/app/app.component.ts) and [`app.module.ts`](src/app/app.module.ts) for details.
 
 ## Implementation
 
@@ -89,4 +113,4 @@ How does it work?
   - `OknoramService`: [`OknoramDefaultService`](projects/oknoram/src/lib/core/impl/oknoram-default.service.ts)
   - `GravsearchService`: [`GravsearchGvqueryService`](projects/oknoram/src/lib/gravsearch/impl/gravsearch-gvquery.service.ts)
   - `KnoraApiService`: [`KnoraApiDefaultService`](projects/oknoram/src/lib/knora-api/impl/knora-api-default.service.ts)
-  - `ConverterService`: [`ConverterReadresourceService`](projects/oknoram/src/lib/converter/impl/converter-readresource.service.ts)
+  - `ConverterService`: [`ConverterReadResourceService`](projects/oknoram/src/lib/converter/impl/converter-read-resource.service.ts)
