@@ -8,5 +8,7 @@ export abstract class OknoramService {
     pageRequest?: PageRequest
   ): Observable<Page<T>>;
 
+  abstract findById<T>(classTarget, id: string): Observable<T>;
+
   abstract count(classTarget): Observable<number>;
 }

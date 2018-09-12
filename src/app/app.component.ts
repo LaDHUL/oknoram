@@ -32,6 +32,7 @@ export class ThingModel {
 export class AppComponent implements OnInit {
   thingsCount$: Observable<number>;
   thingsPage: Page<ThingModel>;
+  firstThing: ThingModel;
   pageIndex = 0;
   loading = false;
 
@@ -53,6 +54,11 @@ export class AppComponent implements OnInit {
       .subscribe(page => {
         this.loading = false;
         this.thingsPage = page;
+        if (page.content && page.content.length > 0) {
+          this.oknoramService
+            .findById<ThingModel>(ThingModel, page.content[0].id)
+            .subscribe(res => (this.firstThing = res));
+        }
       });
   }
 }

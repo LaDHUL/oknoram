@@ -26,6 +26,28 @@ export class OknoramDefaultService implements OknoramService {
     return this.knoraApiService.countQuery(query);
   }
 
+  findById<T>(classTarget, id: string): Observable<T> {
+    const rm = OntologyMapping.mapping().resourceMapping(classTarget);
+    const query = this.gravsearchService.buildQuery(rm, [id]);
+    return this.getObjects<T>(query, rm, 0).pipe(
+      switchMap((res: T[]) => {
+        if (!res || res.length <= 0) {
+          return of(null);
+        } else if (res.length > 1) {
+          return Observable.throw(
+            new Error(
+              `Found several resources (${
+                res.length
+              }) for the specified id: ${id}`
+            )
+          );
+        } else {
+          return of(res[0]);
+        }
+      })
+    );
+  }
+
   findAll<T>(classTarget, pageRequest?: PageRequest): Observable<Page<T>> {
     const rm = OntologyMapping.mapping().resourceMapping(classTarget);
     const query = this.gravsearchService.buildQuery(rm);
@@ -37,25 +59,16 @@ export class OknoramDefaultService implements OknoramService {
           switchMap(
             count =>
               count <= 0
-                ? of(new Page<T>(0, 0, 0, []))
+                ? of(new Page<T>(0, 0, []))
                 : this.getObjects<T>(query, rm, 0).pipe(
-                    switchMap((res: T[]) =>
-                      of(new Page<T>(0, count, res.length, res))
-                    )
+                    switchMap((res: T[]) => of(new Page<T>(0, count, res)))
                   )
           )
         );
     } else {
       return this.getObjects<T>(query, rm, pageRequest.pageIndex).pipe(
         switchMap((res: T[]) =>
-          of(
-            new Page<T>(
-              pageRequest.pageIndex,
-              pageRequest.totalCount,
-              pageRequest.pageSize,
-              res
-            )
-          )
+          of(new Page<T>(pageRequest.pageIndex, pageRequest.totalCount, res))
         )
       );
     }
