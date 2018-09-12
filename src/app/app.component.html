@@ -1,16 +1,18 @@
-<p>Find all Things</p>
-<p>Total: {{thingsCount$ | async}}</p>
-<p>First thing:</p>
+<p>findById(...) :</p>
 <p *ngIf="firstThing">{{firstThing | json}}</p>
-<p *ngIf="thingsPage">
-  <label for="page">Page: </label>
-  <input id="page"
-    type="number"
-    min="0"
-    max="{{thingsPage.pageCount-1}}"
-    #page
-    (change)="onPageIndex(page.value)"
-    value="0">
+<hr>
+<p>findAll(...) - total count: {{thingsCount$ |
+  async}} -
+  <span *ngIf="thingsPage">
+    <label for="page">page: </label>
+    <input id="page"
+      type="number"
+      min="0"
+      max="{{thingsPage.pageCount-1}}"
+      #page
+      (change)="onPageIndex(page.value)"
+      value="0">
+  </span>
 </p>
 <p *ngIf="loading">Loading...</p>
 <table *ngIf="thingsPage && !loading">
