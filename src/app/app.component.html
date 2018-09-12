@@ -19,10 +19,16 @@
     <th>iri</th>
     <th>label</th>
     <th>text</th>
+    <th>boolean</th>
+    <th>integer</th>
+    <th>decimal</th>
   </tr>
   <tr *ngFor="let thing of thingsPage.content">
     <td>{{thing.id}}</td>
     <td>{{thing.label}}</td>
     <td>{{thing.text}}</td>
+    <td>{{thing.boolean}}</td>
+    <td>{{thing.integer}}</td>
+    <td>{{thing.decimal}}</td>
   </tr>
 </table>

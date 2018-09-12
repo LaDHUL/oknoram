@@ -1,3 +1,6 @@
 export enum PropertyType {
-  TextValue = 'TextValue'
+  TextValue = 'TextValue',
+  BooleanValue = 'BooleanValue',
+  IntValue = 'IntValue',
+  DecimalValue = 'DecimalValue'
 }

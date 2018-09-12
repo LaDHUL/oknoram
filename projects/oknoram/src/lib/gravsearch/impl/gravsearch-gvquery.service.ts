@@ -9,7 +9,10 @@ import { GVQueryBuilder } from './gvquery-builder';
 import { GVVar } from './gvvar';
 
 export const TypeMapping = new Map<PropertyType, string>([
-  [PropertyType.TextValue, 'xsd:string']
+  [PropertyType.TextValue, 'xsd:string'],
+  [PropertyType.BooleanValue, 'xsd:boolean'],
+  [PropertyType.IntValue, 'xsd:integer'],
+  [PropertyType.DecimalValue, 'xsd:decimal']
 ]);
 
 @Injectable({

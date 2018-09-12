@@ -22,6 +22,24 @@ export class ThingModel {
   label: string;
   @Property({ type: PropertyType.TextValue, name: 'hasText', optional: true })
   text: string;
+  @Property({
+    type: PropertyType.BooleanValue,
+    name: 'hasBoolean',
+    optional: true
+  })
+  boolean: boolean;
+  @Property({
+    type: PropertyType.IntValue,
+    name: 'hasInteger',
+    optional: true
+  })
+  integer: number;
+  @Property({
+    type: PropertyType.DecimalValue,
+    name: 'hasDecimal',
+    optional: true
+  })
+  decimal: number;
 }
 
 @Component({
