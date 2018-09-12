@@ -1,6 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { ConvertJSONLD, ReadResource } from '@knora/core';
+import {
+  ConvertJSONLD,
+  KnoraConstants,
+  ReadBooleanValue,
+  ReadDecimalValue,
+  ReadIntegerValue,
+  ReadPropertyItem,
+  ReadResource,
+  ReadTextValueAsString
+} from '@knora/core';
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ResourceMapping } from '../../mapping/resource-mapping';
@@ -55,6 +64,22 @@ export class KnoraApiDefaultService implements KnoraApiService {
     );
   }
 
+  private convertValue(item: ReadPropertyItem): any {
+    if (item.getClassName() === KnoraConstants.ReadTextValueAsString) {
+      return (<ReadTextValueAsString>item).str;
+    }
+    if (item.getClassName() === KnoraConstants.ReadBooleanValue) {
+      return (<ReadBooleanValue>item).bool;
+    }
+    if (item.getClassName() === KnoraConstants.ReadIntegerValue) {
+      return (<ReadIntegerValue>item).integer;
+    }
+    if (item.getClassName() === KnoraConstants.ReadDecimalValue) {
+      return (<ReadDecimalValue>item).decimal;
+    }
+    throw new Error(`Not managed type ${item.getClassName()}`);
+  }
+
   private readResource2KnoraResource(
     r: ReadResource,
     rm: ResourceMapping
@@ -65,7 +90,7 @@ export class KnoraApiDefaultService implements KnoraApiService {
         properties.set(
           this.uncompactPropName(propName, rm),
           // FIXME: how to choose the correct ReadPropertyItem ?
-          r.properties[propName][0].getContent()
+          this.convertValue(r.properties[propName][0])
         );
       });
     }
