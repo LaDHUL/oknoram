@@ -3,5 +3,6 @@ export enum PropertyType {
   BooleanValue = 'BooleanValue',
   IntValue = 'IntValue',
   DecimalValue = 'DecimalValue',
-  LinkValue = 'LinkValue'
+  LinkValue = 'LinkValue',
+  DateValue = 'DateValue'
 }

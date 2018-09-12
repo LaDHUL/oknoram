@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   ReadBooleanValue,
+  ReadDateValue,
   ReadDecimalValue,
   ReadIntegerValue,
   ReadLinkValue,
@@ -47,6 +48,12 @@ export class ThingModel {
     optional: true
   })
   decimal: ReadDecimalValue;
+  @Property({
+    type: PropertyType.DateValue,
+    name: 'hasDate',
+    optional: true
+  })
+  date: ReadDateValue;
   @Property({
     type: PropertyType.LinkValue,
     name: 'hasOtherThing',
