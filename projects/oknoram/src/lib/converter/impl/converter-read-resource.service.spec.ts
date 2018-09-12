@@ -1,26 +1,26 @@
 import {
-  makeKnoraResource,
+  makeReadResource,
   makeResourceMapping,
+  OknoramConfigStub,
   TestModel
 } from '../../test/helpers';
 import { ConverterService } from '../converter.service';
-import { ConverterReadresourceService } from './converter-readresource.service';
+import { ConverterReadResourceService } from './converter-read-resource.service';
 
-describe('ConverterReadresourceService', () => {
+describe('ConverterReadResourceService', () => {
   let convertService: ConverterService;
   beforeEach(() => {
-    convertService = new ConverterReadresourceService();
+    convertService = new ConverterReadResourceService(new OknoramConfigStub());
   });
 
-  it('should convert knora ', () => {
+  it('should convert knora resource into model object', () => {
     const converted = convertService.convert<TestModel>(
       makeResourceMapping(),
-      makeKnoraResource()
+      makeReadResource()
     );
-
     expect(converted).toBeTruthy();
     expect(converted.iriVar).toBe('iri');
     expect(converted.labelVar).toBe('label');
-    expect(converted.strVar).toBe('value');
+    expect(converted.strVar.str).toBe('value');
   });
 });

@@ -13,6 +13,7 @@ export const TypeMapping = new Map<PropertyType, string>([
   [PropertyType.BooleanValue, 'xsd:boolean'],
   [PropertyType.IntValue, 'xsd:integer'],
   [PropertyType.DecimalValue, 'xsd:decimal'],
+  [PropertyType.DateValue, 'knora-api:Date'],
   [PropertyType.LinkValue, 'knora-api:Resource']
 ]);
 

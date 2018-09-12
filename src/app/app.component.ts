@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  ReadBooleanValue,
+  ReadDateValue,
+  ReadDecimalValue,
+  ReadIntegerValue,
+  ReadLinkValue,
+  ReadTextValueAsString
+} from '@knora/core';
+import {
   Iri,
   Label,
   OknoramService,
@@ -21,31 +29,37 @@ export class ThingModel {
   @Label
   label: string;
   @Property({ type: PropertyType.TextValue, name: 'hasText', optional: true })
-  text: string;
+  text: ReadTextValueAsString;
   @Property({
     type: PropertyType.BooleanValue,
     name: 'hasBoolean',
     optional: true
   })
-  boolean: boolean;
+  boolean: ReadBooleanValue;
   @Property({
     type: PropertyType.IntValue,
     name: 'hasInteger',
     optional: true
   })
-  integer: number;
+  integer: ReadIntegerValue;
   @Property({
     type: PropertyType.DecimalValue,
     name: 'hasDecimal',
     optional: true
   })
-  decimal: number;
+  decimal: ReadDecimalValue;
+  @Property({
+    type: PropertyType.DateValue,
+    name: 'hasDate',
+    optional: true
+  })
+  date: ReadDateValue;
   @Property({
     type: PropertyType.LinkValue,
     name: 'hasOtherThing',
     optional: true
   })
-  otherThingId: string;
+  otherThing: ReadLinkValue;
 }
 
 @Component({
