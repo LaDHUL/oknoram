@@ -12,7 +12,8 @@ export const TypeMapping = new Map<PropertyType, string>([
   [PropertyType.TextValue, 'xsd:string'],
   [PropertyType.BooleanValue, 'xsd:boolean'],
   [PropertyType.IntValue, 'xsd:integer'],
-  [PropertyType.DecimalValue, 'xsd:decimal']
+  [PropertyType.DecimalValue, 'xsd:decimal'],
+  [PropertyType.LinkValue, 'knora-api:Resource']
 ]);
 
 @Injectable({

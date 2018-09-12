@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { KnoraResource } from '../../knora-api/knora-resource';
+import { PropertyType } from '../../mapping/property-type';
 import { ResourceMapping } from '../../mapping/resource-mapping';
 import { ConverterService } from '../converter.service';
 
@@ -14,10 +15,14 @@ export class ConverterReadresourceService implements ConverterService {
       obj[rm.label] = res.label;
     }
     rm.attributes.forEach((att, key) => {
-      if (!att.optional && !res.properties.has(att.name)) {
-        throw new Error(`Cannot find property ${att.name} in Knora resource`);
-      } else if (res.properties.has(att.name)) {
-        obj[key] = res.properties.get(att.name);
+      let attName = att.name;
+      if (att.type === PropertyType.LinkValue) {
+        attName = attName + 'Value';
+      }
+      if (!att.optional && !res.properties.has(attName)) {
+        throw new Error(`Cannot find property ${attName} in Knora resource`);
+      } else if (res.properties.has(attName)) {
+        obj[key] = res.properties.get(attName);
       } else {
         obj[key] = null;
       }

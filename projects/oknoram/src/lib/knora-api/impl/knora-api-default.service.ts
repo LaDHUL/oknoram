@@ -6,6 +6,7 @@ import {
   ReadBooleanValue,
   ReadDecimalValue,
   ReadIntegerValue,
+  ReadLinkValue,
   ReadPropertyItem,
   ReadResource,
   ReadTextValueAsString
@@ -77,6 +78,10 @@ export class KnoraApiDefaultService implements KnoraApiService {
     if (item.getClassName() === KnoraConstants.ReadDecimalValue) {
       return (<ReadDecimalValue>item).decimal;
     }
+    if (item.getClassName() === KnoraConstants.ReadLinkValue) {
+      return (<ReadLinkValue>item).id;
+    }
+
     throw new Error(`Not managed type ${item.getClassName()}`);
   }
 

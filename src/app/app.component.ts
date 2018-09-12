@@ -40,6 +40,12 @@ export class ThingModel {
     optional: true
   })
   decimal: number;
+  @Property({
+    type: PropertyType.LinkValue,
+    name: 'hasOtherThing',
+    optional: true
+  })
+  otherThingId: string;
 }
 
 @Component({
