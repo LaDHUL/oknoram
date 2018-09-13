@@ -1,7 +1,7 @@
 <ng-template #getContent
   let-items="items">
   <span *ngFor="let item of items; let isLast=last">{{
-    item.getContent() }}<span *ngIf="!isLast"> -
+    item.getContent() }}<span *ngIf="!isLast"> |
     </span></span>
 </ng-template>
 
@@ -31,6 +31,7 @@
     <th>integers</th>
     <th>decimals</th>
     <th>dates</th>
+    <th>lists</th>
     <th>otherThings</th>
   </tr>
   <tr *ngFor="let thing of thingsPage.content">
@@ -50,6 +51,9 @@
     </td>
     <td>
       <ng-container *ngTemplateOutlet="getContent;context:{items: thing.dates}"></ng-container>
+    </td>
+    <td>
+      <ng-container *ngTemplateOutlet="getContent;context:{items: thing.lists}"></ng-container>
     </td>
     <td>
       <ng-container *ngTemplateOutlet="getContent;context:{items: thing.otherThings}"></ng-container>

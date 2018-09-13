@@ -4,5 +4,6 @@ export enum PropertyType {
   IntValue = 'IntValue',
   DecimalValue = 'DecimalValue',
   LinkValue = 'LinkValue',
-  DateValue = 'DateValue'
+  DateValue = 'DateValue',
+  ListValue = 'ListValue'
 }
