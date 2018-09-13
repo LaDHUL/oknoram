@@ -16,12 +16,6 @@ import { OknoramConfig, OknoramConfigToken } from './oknoram-config';
 })
 export class OknoramModule {
   static forRoot(config: OknoramConfig): ModuleWithProviders {
-    KuiCoreModule.forRoot({
-      name: '',
-      api: config.knoraApiBaseUrl,
-      media: '',
-      app: ''
-    });
     return {
       ngModule: OknoramModule,
       providers: [
