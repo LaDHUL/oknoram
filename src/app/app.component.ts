@@ -28,38 +28,44 @@ export class ThingModel {
   id: string;
   @Label
   label: string;
+
   @Property({ type: PropertyType.TextValue, name: 'hasText', optional: true })
-  text: ReadTextValueAsString;
+  texts: ReadTextValueAsString[];
+
   @Property({
     type: PropertyType.BooleanValue,
     name: 'hasBoolean',
     optional: true
   })
-  boolean: ReadBooleanValue;
+  booleans: ReadBooleanValue[];
+
   @Property({
     type: PropertyType.IntValue,
     name: 'hasInteger',
     optional: true
   })
-  integer: ReadIntegerValue;
+  integers: ReadIntegerValue[];
+
   @Property({
     type: PropertyType.DecimalValue,
     name: 'hasDecimal',
     optional: true
   })
-  decimal: ReadDecimalValue;
+  decimals: ReadDecimalValue[];
+
   @Property({
     type: PropertyType.DateValue,
     name: 'hasDate',
     optional: true
   })
-  date: ReadDateValue;
+  dates: ReadDateValue[];
+
   @Property({
     type: PropertyType.LinkValue,
     name: 'hasOtherThing',
     optional: true
   })
-  otherThing: ReadLinkValue;
+  otherThings: ReadLinkValue[];
 }
 
 @Component({

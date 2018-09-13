@@ -27,7 +27,7 @@ export class ConverterReadResourceService implements ConverterService {
       if (!att.optional && res.properties && !(attName in res.properties)) {
         throw new Error(`Cannot find property ${attName} in Knora resource`);
       } else if (res.properties && attName in res.properties) {
-        obj[key] = res.properties[attName][0];
+        obj[key] = res.properties[attName];
       } else {
         obj[key] = null;
       }

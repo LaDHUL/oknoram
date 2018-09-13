@@ -16,7 +16,7 @@ export class OknoramConfigStub implements OknoramConfig {
 export class TestModel {
   iriVar: string;
   labelVar: string;
-  strVar: ReadTextValueAsString;
+  strVar: ReadTextValueAsString[];
 }
 
 export function makeResourceMapping(): ResourceMapping {
