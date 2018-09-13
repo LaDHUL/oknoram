@@ -5,6 +5,7 @@ import {
   ReadDecimalValue,
   ReadIntegerValue,
   ReadLinkValue,
+  ReadListValue,
   ReadTextValueAsString
 } from '@knora/core';
 import {
@@ -59,6 +60,13 @@ export class ThingModel {
     optional: true
   })
   dates: ReadDateValue[];
+
+  @Property({
+    type: PropertyType.ListValue,
+    name: 'hasListItem',
+    optional: true
+  })
+  lists: ReadListValue[];
 
   @Property({
     type: PropertyType.LinkValue,
