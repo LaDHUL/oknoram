@@ -76,6 +76,21 @@ export class ThingModel {
   otherThings: ReadLinkValue[];
 }
 
+@Resource({
+  name: 'BlueThing',
+  projectCode: '0001',
+  projectShortname: 'anything',
+  extend: ThingModel
+})
+export class BlueThingModel extends ThingModel {
+  @Property({
+    type: PropertyType.LinkValue,
+    name: 'hasBlueThing',
+    optional: true
+  })
+  blueThings: ReadLinkValue[];
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -84,6 +99,8 @@ export class ThingModel {
 export class AppComponent implements OnInit {
   thingsCount$: Observable<number>;
   thingsPage: Page<ThingModel>;
+  blueThingsCount$: Observable<number>;
+  blueThingsPage: Page<BlueThingModel>;
   firstThing: ThingModel;
   pageIndex = 0;
   loading = false;
@@ -92,7 +109,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.thingsCount$ = this.oknoramService.count(ThingModel);
+    this.blueThingsCount$ = this.oknoramService.count(BlueThingModel);
     this.onPageIndex(0);
+    console.log(new A());
+    console.log(new B());
   }
 
   onPageIndex(pageIndex: number) {
@@ -111,6 +131,17 @@ export class AppComponent implements OnInit {
             .findById<ThingModel>(ThingModel, page.content[0].id)
             .subscribe(res => (this.firstThing = res));
         }
+      });
+    this.oknoramService
+      .findAll<BlueThingModel>(
+        BlueThingModel,
+        this.blueThingsPage
+          ? this.blueThingsPage.pageRequest(this.pageIndex)
+          : null
+      )
+      .subscribe(page => {
+        this.loading = false;
+        this.blueThingsPage = page;
       });
   }
 }

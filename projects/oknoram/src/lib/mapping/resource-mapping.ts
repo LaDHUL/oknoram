@@ -1,3 +1,4 @@
+import { OntologyMapping } from './ontology-mapping';
 import { PropertyDef } from './property-def';
 import { ResourceDef } from './resource-def';
 
@@ -26,7 +27,10 @@ export class ResourceMapping {
   }
 
   get iri() {
-    const iri = this.iriProperty_;
+    let iri = this.iriProperty_;
+    if (!iri && this.def_.extend) {
+      iri = OntologyMapping.mapping().resourceMapping(this.def_.extend).iri;
+    }
     if (!iri) {
       throw new Error(`Iri mapping of ${this.classTarget_} is missing`);
     }
@@ -38,11 +42,20 @@ export class ResourceMapping {
   }
 
   get label() {
-    return this.labelProperty_;
+    let label = this.labelProperty_;
+    if (!label && this.def_.extend) {
+      label = OntologyMapping.mapping().resourceMapping(this.def_.extend).label;
+    }
+    return label;
   }
 
   get attributes() {
     const attrs = new Map<string, PropertyDef>();
+    if (this.def_.extend) {
+      OntologyMapping.mapping()
+        .resourceMapping(this.def_.extend)
+        .attributes.forEach((value, key) => attrs.set(key, value));
+    }
     this.attributes_.forEach((value, key) => attrs.set(key, value));
     return attrs;
   }
