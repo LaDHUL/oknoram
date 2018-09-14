@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/LaDHUL/oknoram.svg?branch=develop)](https://travis-ci.org/LaDHUL/oknoram)
+[![codecov](https://codecov.io/gh/LaDHUL/oknoram/branch/develop/graph/badge.svg)](https://codecov.io/gh/LaDHUL/oknoram)
 
 # oknoram
 
