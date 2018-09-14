@@ -111,8 +111,6 @@ export class AppComponent implements OnInit {
     this.thingsCount$ = this.oknoramService.count(ThingModel);
     this.blueThingsCount$ = this.oknoramService.count(BlueThingModel);
     this.onPageIndex(0);
-    console.log(new A());
-    console.log(new B());
   }
 
   onPageIndex(pageIndex: number) {
