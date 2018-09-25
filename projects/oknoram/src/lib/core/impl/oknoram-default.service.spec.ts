@@ -1,8 +1,8 @@
 import { of } from 'rxjs';
 import { ConverterService } from '../../converter/converter.service';
 import { GravsearchService } from '../../gravsearch/gravsearch.service';
-import { TestModel } from '../../knora-api/impl/knora-api-default.service.spec';
 import { KnoraApiService } from '../../knora-api/knora-api.service';
+import { TestModel, TestModelData } from '../../test/helpers';
 import { OknoramService } from '../oknoram.service';
 import { OknoramDefaultService } from './oknoram-default.service';
 
@@ -51,19 +51,21 @@ describe('OknoramDefaultService', () => {
   });
 
   it('should return first page with a TestModel resource', () => {
-    const tm = {
-      iriVar: 'iriVar',
-      labelVar: 'labelVar',
-      strVar: 'strVar'
-    } as TestModel;
     knoraApiServiceSpy.countQuery.and.returnValue(of(3));
     knoraApiServiceSpy.executeQuery.and.returnValue(of([{}, {}]));
-    converterServiceSpy.convert.and.returnValue(tm);
+    converterServiceSpy.convert.and.returnValue(TestModelData);
     oknoramService.findAll<TestModel>(TestModel).subscribe(page => {
       expect(page.totalCount).toBe(3);
       expect(page.pageIndex).toBe(0);
       expect(page.content.length).toBe(2);
-      expect(page.content).toEqual([tm, tm]);
+      expect(page.content[0].iriVar).toEqual('iriVarValue');
+      expect(page.content[0].labelVar).toEqual('labelVarValue');
+      expect(page.content[0].strVar.length).toBe(1);
+      expect(page.content[0].strVar[0].str).toEqual('strVarValue');
+      expect(page.content[1].iriVar).toEqual('iriVarValue');
+      expect(page.content[1].labelVar).toEqual('labelVarValue');
+      expect(page.content[1].strVar.length).toBe(1);
+      expect(page.content[1].strVar[0].str).toEqual('strVarValue');
 
       knoraApiServiceSpy.executeQuery.and.returnValue(of([{}]));
       oknoramService
@@ -72,7 +74,10 @@ describe('OknoramDefaultService', () => {
           expect(nextPage.totalCount).toBe(3);
           expect(nextPage.pageIndex).toBe(1);
           expect(nextPage.content.length).toBe(1);
-          expect(nextPage.content).toEqual([tm]);
+          expect(nextPage.content[0].iriVar).toEqual('iriVarValue');
+          expect(nextPage.content[0].labelVar).toEqual('labelVarValue');
+          expect(nextPage.content[0].strVar.length).toBe(1);
+          expect(nextPage.content[0].strVar[0].str).toEqual('strVarValue');
         }, fail);
     }, fail);
 
@@ -82,29 +87,22 @@ describe('OknoramDefaultService', () => {
   });
 
   it('should return TestModel resource of specified id', () => {
-    const tm = {
-      iriVar: 'iriVar',
-      labelVar: 'labelVar',
-      strVar: 'strVar'
-    } as TestModel;
     knoraApiServiceSpy.executeQuery.and.returnValue(of([{}]));
-    converterServiceSpy.convert.and.returnValue(tm);
+    converterServiceSpy.convert.and.returnValue(TestModelData);
     oknoramService.findById<TestModel>(TestModel, 'id').subscribe(obj => {
       expect(obj).toBeTruthy();
-      expect(obj).toEqual(tm);
+      expect(obj.iriVar).toEqual('iriVarValue');
+      expect(obj.labelVar).toEqual('labelVarValue');
+      expect(obj.strVar.length).toBe(1);
+      expect(obj.strVar[0].str).toEqual('strVarValue');
     }, fail);
     expect(knoraApiServiceSpy.executeQuery.calls.count()).toBe(1);
     expect(converterServiceSpy.convert.calls.count()).toBe(1);
   });
 
   it('should throw exception of several resources of specified id', () => {
-    const tm = {
-      iriVar: 'iriVar',
-      labelVar: 'labelVar',
-      strVar: 'strVar'
-    } as TestModel;
     knoraApiServiceSpy.executeQuery.and.returnValue(of([{}, {}]));
-    converterServiceSpy.convert.and.returnValue(tm);
+    converterServiceSpy.convert.and.returnValue(TestModelData);
     oknoramService
       .findById<TestModel>(TestModel, 'id')
       .subscribe(obj => {}, error => expect(error).toBeTruthy());

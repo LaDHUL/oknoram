@@ -19,6 +19,12 @@ export class TestModel {
   strVar: ReadTextValueAsString[];
 }
 
+export const TestModelData = {
+  iriVar: 'iriVarValue',
+  labelVar: 'labelVarValue',
+  strVar: [new ReadTextValueAsString('strVarId', 'strVarProp', 'strVarValue')]
+} as TestModel;
+
 export function makeResourceMapping(): ResourceMapping {
   const propRef = {
     type: PropertyType.TextValue,
