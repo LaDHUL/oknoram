@@ -9,17 +9,18 @@
 <p *ngIf="firstThing">id={{firstThing.id}}
   label={{firstThing.label}}</p>
 <hr>
-<p>findAll(...) - total count: {{thingsCount$ |
-  async}} -
-  <span *ngIf="thingsPage">
-    <label for="page">page: </label>
-    <input id="page"
-      type="number"
-      min="0"
-      #page
-      (change)="onPageIndex(page.value)"
-      value="0">
-  </span>
+<span *ngIf="thingsPage">
+  <label for="page">page: </label>
+  <input id="page"
+    type="number"
+    min="0"
+    #page
+    (change)="onPageIndex(page.value)"
+    value="0">
+</span>
+<p>findAll(...) Things - total count:
+  {{thingsCount$ |
+  async}}
 </p>
 <p *ngIf="loading">Loading...</p>
 <table *ngIf="thingsPage && !loading">
@@ -57,6 +58,55 @@
     </td>
     <td>
       <ng-container *ngTemplateOutlet="getContent;context:{items: thing.otherThings}"></ng-container>
+    </td>
+  </tr>
+</table>
+
+<p>findAll(...) BlueThings - total count:
+  {{blueThingsCount$ |
+  async}}
+</p>
+
+<p *ngIf="loading">Loading...</p>
+<table *ngIf="blueThingsPage && !loading">
+  <tr>
+    <th>iri</th>
+    <th>label</th>
+    <th>texts</th>
+    <th>booleans</th>
+    <th>integers</th>
+    <th>decimals</th>
+    <th>dates</th>
+    <th>lists</th>
+    <th>otherThings</th>
+    <th>blueThings</th>
+  </tr>
+  <tr *ngFor="let thing of blueThingsPage.content">
+    <td>{{thing.id}}</td>
+    <td>{{thing.label}}</td>
+    <td>
+      <ng-container *ngTemplateOutlet="getContent;context:{items: thing.texts}"></ng-container>
+    </td>
+    <td>
+      <ng-container *ngTemplateOutlet="getContent;context:{items: thing.booleans}"></ng-container>
+    </td>
+    <td>
+      <ng-container *ngTemplateOutlet="getContent;context:{items: thing.integers}"></ng-container>
+    </td>
+    <td>
+      <ng-container *ngTemplateOutlet="getContent;context:{items: thing.decimals}"></ng-container>
+    </td>
+    <td>
+      <ng-container *ngTemplateOutlet="getContent;context:{items: thing.dates}"></ng-container>
+    </td>
+    <td>
+      <ng-container *ngTemplateOutlet="getContent;context:{items: thing.lists}"></ng-container>
+    </td>
+    <td>
+      <ng-container *ngTemplateOutlet="getContent;context:{items: thing.otherThings}"></ng-container>
+    </td>
+    <td>
+      <ng-container *ngTemplateOutlet="getContent;context:{items: thing.blueThings}"></ng-container>
     </td>
   </tr>
 </table>

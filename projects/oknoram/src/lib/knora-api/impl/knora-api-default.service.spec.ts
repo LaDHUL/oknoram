@@ -4,12 +4,6 @@ import { of } from 'rxjs';
 import { OknoramConfigStub } from '../../test/helpers';
 import { KnoraApiDefaultService } from './knora-api-default.service';
 
-export class TestModel {
-  iriVar: string;
-  labelVar: string;
-  strVar: string;
-}
-
 describe('KnoraApiDefaultService', () => {
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
   let knoraApiService: KnoraApiDefaultService;

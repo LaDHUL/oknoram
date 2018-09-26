@@ -1,3 +1,4 @@
+import { OntologyMapping } from './ontology-mapping';
 import { PropertyDef } from './property-def';
 import { ResourceDef } from './resource-def';
 
@@ -25,8 +26,25 @@ export class ResourceMapping {
     this.iriProperty_ = propertyKey;
   }
 
+  private foundFirstInherited(classTarget: any, attName: string) {
+    const targetMapping = OntologyMapping.mapping().resourceMapping(
+      classTarget
+    );
+    const attValue = attName in targetMapping ? targetMapping[attName] : null;
+    if (attValue) {
+      return attValue;
+    }
+    if (targetMapping.def.extend) {
+      return this.foundFirstInherited(targetMapping.def.extend, attName);
+    }
+    return null;
+  }
+
   get iri() {
-    const iri = this.iriProperty_;
+    let iri = this.iriProperty_;
+    if (!iri && this.def_.extend) {
+      iri = this.foundFirstInherited(this.def_.extend, 'iri');
+    }
     if (!iri) {
       throw new Error(`Iri mapping of ${this.classTarget_} is missing`);
     }
@@ -38,11 +56,33 @@ export class ResourceMapping {
   }
 
   get label() {
-    return this.labelProperty_;
+    let label = this.labelProperty_;
+    if (!label && this.def_.extend) {
+      label = this.foundFirstInherited(this.def_.extend, 'label');
+    }
+    return label;
+  }
+
+  foundAllInheritedAttributes(
+    classTarget: any,
+    attrs: Map<string, PropertyDef>
+  ) {
+    const targetMapping = OntologyMapping.mapping().resourceMapping(
+      classTarget
+    );
+    if (targetMapping.def.extend) {
+      this.foundAllInheritedAttributes(targetMapping.def.extend, attrs);
+    }
+    OntologyMapping.mapping()
+      .resourceMapping(classTarget)
+      .attributes.forEach((value, key) => attrs.set(key, value));
   }
 
   get attributes() {
     const attrs = new Map<string, PropertyDef>();
+    if (this.def_.extend) {
+      this.foundAllInheritedAttributes(this.def_.extend, attrs);
+    }
     this.attributes_.forEach((value, key) => attrs.set(key, value));
     return attrs;
   }
