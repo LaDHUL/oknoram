@@ -26,31 +26,24 @@ export class ResourceMapping {
     this.iriProperty_ = propertyKey;
   }
 
-  private breadthFirstSearchInherited(classTargets: any[], attName: string) {
-    let nextClassTargets = [];
-    for (const classTarget of classTargets) {
-      const targetMapping = OntologyMapping.mapping().resourceMapping(
-        classTarget
-      );
-      const attValue = attName in targetMapping ? targetMapping[attName] : null;
-      if (attValue) {
-        return attValue;
-      }
-      if (targetMapping.def.extends) {
-        nextClassTargets = nextClassTargets.concat(targetMapping.def.extends);
-      }
+  private foundFirstInherited(classTarget: any, attName: string) {
+    const targetMapping = OntologyMapping.mapping().resourceMapping(
+      classTarget
+    );
+    const attValue = attName in targetMapping ? targetMapping[attName] : null;
+    if (attValue) {
+      return attValue;
     }
-    if (nextClassTargets.length > 0) {
-      return this.breadthFirstSearchInherited(nextClassTargets, attName);
+    if (targetMapping.def.extend) {
+      return this.foundFirstInherited(targetMapping.def.extend, attName);
     }
     return null;
   }
 
   get iri() {
     let iri = this.iriProperty_;
-    if (!iri && this.def_.extends) {
-      // iri = this.foundFirstInheritedIri(this.def_.extends);
-      iri = this.breadthFirstSearchInherited(this.def_.extends, 'iri');
+    if (!iri && this.def_.extend) {
+      iri = this.foundFirstInherited(this.def_.extend, 'iri');
     }
     if (!iri) {
       throw new Error(`Iri mapping of ${this.classTarget_} is missing`);
@@ -64,37 +57,31 @@ export class ResourceMapping {
 
   get label() {
     let label = this.labelProperty_;
-    if (!label && this.def_.extends) {
-      // label = this.foundFirstInheritedLabel(this.def_.extends);
-      label = this.breadthFirstSearchInherited(this.def_.extends, 'label');
+    if (!label && this.def_.extend) {
+      label = this.foundFirstInherited(this.def_.extend, 'label');
     }
     return label;
   }
 
-  depthFirstSearchInheritedAttributes(
-    classTargets: any[],
+  foundAllInheritedAttributes(
+    classTarget: any,
     attrs: Map<string, PropertyDef>
   ) {
-    for (const classTarget of classTargets) {
-      const targetMapping = OntologyMapping.mapping().resourceMapping(
-        classTarget
-      );
-      if (targetMapping.def.extends) {
-        this.depthFirstSearchInheritedAttributes(
-          targetMapping.def.extends,
-          attrs
-        );
-      }
-      OntologyMapping.mapping()
-        .resourceMapping(classTarget)
-        .attributes.forEach((value, key) => attrs.set(key, value));
+    const targetMapping = OntologyMapping.mapping().resourceMapping(
+      classTarget
+    );
+    if (targetMapping.def.extend) {
+      this.foundAllInheritedAttributes(targetMapping.def.extend, attrs);
     }
+    OntologyMapping.mapping()
+      .resourceMapping(classTarget)
+      .attributes.forEach((value, key) => attrs.set(key, value));
   }
 
   get attributes() {
     const attrs = new Map<string, PropertyDef>();
-    if (this.def_.extends) {
-      this.depthFirstSearchInheritedAttributes(this.def_.extends, attrs);
+    if (this.def_.extend) {
+      this.foundAllInheritedAttributes(this.def_.extend, attrs);
     }
     this.attributes_.forEach((value, key) => attrs.set(key, value));
     return attrs;

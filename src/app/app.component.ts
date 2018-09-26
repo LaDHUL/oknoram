@@ -80,7 +80,7 @@ export class ThingModel {
   name: 'BlueThing',
   projectCode: '0001',
   projectShortname: 'anything',
-  extends: [ThingModel]
+  extend: ThingModel
 })
 export class BlueThingModel extends ThingModel {
   @Property({
