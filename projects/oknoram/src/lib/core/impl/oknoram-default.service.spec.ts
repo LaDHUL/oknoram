@@ -61,11 +61,11 @@ describe('OknoramDefaultService', () => {
       expect(page.content[0].iriVar).toEqual('iriVarValue');
       expect(page.content[0].labelVar).toEqual('labelVarValue');
       expect(page.content[0].strVar.length).toBe(1);
-      expect(page.content[0].strVar[0].str).toEqual('strVarValue');
+      expect(page.content[0].strVar[0]).toEqual('strVarValue');
       expect(page.content[1].iriVar).toEqual('iriVarValue');
       expect(page.content[1].labelVar).toEqual('labelVarValue');
       expect(page.content[1].strVar.length).toBe(1);
-      expect(page.content[1].strVar[0].str).toEqual('strVarValue');
+      expect(page.content[1].strVar[0]).toEqual('strVarValue');
 
       knoraApiServiceSpy.executeQuery.and.returnValue(of([{}]));
       oknoramService
@@ -77,7 +77,7 @@ describe('OknoramDefaultService', () => {
           expect(nextPage.content[0].iriVar).toEqual('iriVarValue');
           expect(nextPage.content[0].labelVar).toEqual('labelVarValue');
           expect(nextPage.content[0].strVar.length).toBe(1);
-          expect(nextPage.content[0].strVar[0].str).toEqual('strVarValue');
+          expect(nextPage.content[0].strVar[0]).toEqual('strVarValue');
         }, fail);
     }, fail);
 
@@ -94,7 +94,7 @@ describe('OknoramDefaultService', () => {
       expect(obj.iriVar).toEqual('iriVarValue');
       expect(obj.labelVar).toEqual('labelVarValue');
       expect(obj.strVar.length).toBe(1);
-      expect(obj.strVar[0].str).toEqual('strVarValue');
+      expect(obj.strVar[0]).toEqual('strVarValue');
     }, fail);
     expect(knoraApiServiceSpy.executeQuery.calls.count()).toBe(1);
     expect(converterServiceSpy.convert.calls.count()).toBe(1);

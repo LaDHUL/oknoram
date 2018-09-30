@@ -23,6 +23,6 @@ describe('ConverterReadResourceService', () => {
     expect(converted.labelVar).toBe('label');
     expect(converted.strVar).toBeTruthy();
     expect(converted.strVar.length).toBe(1);
-    expect(converted.strVar[0].str).toBe('value');
+    expect(converted.strVar[0]).toBe('value');
   });
 });

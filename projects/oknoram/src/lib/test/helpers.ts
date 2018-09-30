@@ -16,13 +16,13 @@ export class OknoramConfigStub implements OknoramConfig {
 export class TestModel {
   iriVar: string;
   labelVar: string;
-  strVar: ReadTextValueAsString[];
+  strVar: string[];
 }
 
 export const TestModelData = {
   iriVar: 'iriVarValue',
   labelVar: 'labelVarValue',
-  strVar: [new ReadTextValueAsString('strVarId', 'strVarProp', 'strVarValue')]
+  strVar: ['strVarValue']
 } as TestModel;
 
 export function makeResourceMapping(): ResourceMapping {
