@@ -12,6 +12,7 @@ import {
   ReadTextValueAsXml
 } from '@knora/core';
 import { PartialDate, Period } from '../../mapping/period';
+import { PropertyCardinality } from '../../mapping/property-cardinality';
 import { PropertyType } from '../../mapping/property-type';
 import { ResourceMapping } from '../../mapping/resource-mapping';
 import { OknoramConfig, OknoramConfigToken } from '../../oknoram-config';
@@ -39,9 +40,19 @@ export class ConverterReadResourceService implements ConverterService {
       if (!att.optional && res.properties && !(attName in res.properties)) {
         throw new Error(`Cannot find property ${attName} in Knora resource`);
       } else if (res.properties && attName in res.properties) {
-        obj[key] = res.properties[attName].map(v =>
-          this.readValueConvert(v, att.type)
-        );
+        if (
+          att.cardinality &&
+          att.cardinality === PropertyCardinality.SingleValue
+        ) {
+          obj[key] = this.readValueConvert(
+            res.properties[attName][0],
+            att.type
+          );
+        } else {
+          obj[key] = res.properties[attName].map(v =>
+            this.readValueConvert(v, att.type)
+          );
+        }
       } else {
         obj[key] = null;
       }

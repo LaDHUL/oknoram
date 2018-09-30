@@ -6,6 +6,7 @@ import {
   Page,
   Period,
   Property,
+  PropertyCardinality,
   PropertyType,
   Resource
 } from 'oknoram';
@@ -22,7 +23,11 @@ export class ThingModel {
   @Label
   label: string;
 
-  @Property({ type: PropertyType.TextValue, name: 'hasText', optional: true })
+  @Property({
+    type: PropertyType.TextValue,
+    name: 'hasText',
+    optional: true
+  })
   texts: string[];
 
   @Property({
@@ -35,9 +40,10 @@ export class ThingModel {
   @Property({
     type: PropertyType.BooleanValue,
     name: 'hasBoolean',
+    cardinality: PropertyCardinality.SingleValue,
     optional: true
   })
-  booleans: boolean[];
+  boolean: boolean;
 
   @Property({
     type: PropertyType.IntValue,
