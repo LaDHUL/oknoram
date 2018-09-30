@@ -1,7 +1,7 @@
 <ng-template #getContent
   let-items="items">
   <span *ngFor="let item of items; let isLast=last">{{
-    item.getContent() }}<span *ngIf="!isLast"> |
+    item }}<span *ngIf="!isLast"> |
     </span></span>
 </ng-template>
 
@@ -28,6 +28,7 @@
     <th>iri</th>
     <th>label</th>
     <th>texts</th>
+    <th>richTexts</th>
     <th>booleans</th>
     <th>integers</th>
     <th>decimals</th>
@@ -36,10 +37,14 @@
     <th>otherThings</th>
   </tr>
   <tr *ngFor="let thing of thingsPage.content">
-    <td>{{thing.id}}</td>
+    <td><a style="cursor: pointer;"
+        (click)="onClickId(thing)">{{thing.id}}</a></td>
     <td>{{thing.label}}</td>
     <td>
       <ng-container *ngTemplateOutlet="getContent;context:{items: thing.texts}"></ng-container>
+    </td>
+    <td>
+      <ng-container *ngTemplateOutlet="getContent;context:{items: thing.richTexts}"></ng-container>
     </td>
     <td>
       <ng-container *ngTemplateOutlet="getContent;context:{items: thing.booleans}"></ng-container>
