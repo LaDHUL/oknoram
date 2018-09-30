@@ -1,12 +1,16 @@
 {
   "name": "oknoram-app",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "build-lib": "ng build oknoram",
+    "copy-files": "cp LICENSE ./dist/oknoram/ && cp README.md ./dist/oknoram/",
+    "npm-pack": "cd dist/oknoram && npm pack",
+    "package": "yarn build-lib && yarn copy-files && yarn npm-pack",
     "build-lib-ci": "ng build oknoram --prod",
     "test-lib": "ng test oknoram",
     "test-lib-ci": "ng test oknoram --watch=false --browsers=ChromeHeadless --code-coverage",
