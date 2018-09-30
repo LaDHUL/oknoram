@@ -33,7 +33,7 @@ export class ThingModel {
   @Label
   label: string;
   @Property({ type: PropertyType.TextValue, name: 'hasText', optional: true })
-  text: ReadTextValueAsString;
+  texts: string[];
   [...]
 }
 ```
