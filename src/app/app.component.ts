@@ -1,19 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  ReadBooleanValue,
-  ReadDateValue,
-  ReadDecimalValue,
-  ReadIntegerValue,
-  ReadLinkValue,
-  ReadListValue,
-  ReadTextValueAsString
-} from '@knora/core';
-import {
   Iri,
   Label,
   OknoramService,
   Page,
+  Period,
   Property,
+  PropertyCardinality,
   PropertyType,
   Resource
 } from 'oknoram';
@@ -30,50 +23,62 @@ export class ThingModel {
   @Label
   label: string;
 
-  @Property({ type: PropertyType.TextValue, name: 'hasText', optional: true })
-  texts: ReadTextValueAsString[];
+  @Property({
+    type: PropertyType.TextValue,
+    name: 'hasText',
+    optional: true
+  })
+  texts: string[];
+
+  @Property({
+    type: PropertyType.RichTextValue,
+    name: 'hasRichtext',
+    optional: true
+  })
+  richTexts: string[];
 
   @Property({
     type: PropertyType.BooleanValue,
     name: 'hasBoolean',
+    cardinality: PropertyCardinality.SingleValue,
     optional: true
   })
-  booleans: ReadBooleanValue[];
+  boolean: boolean;
 
   @Property({
     type: PropertyType.IntValue,
     name: 'hasInteger',
     optional: true
   })
-  integers: ReadIntegerValue[];
+  integers: number[];
 
   @Property({
     type: PropertyType.DecimalValue,
     name: 'hasDecimal',
     optional: true
   })
-  decimals: ReadDecimalValue[];
+  decimals: number[];
 
   @Property({
     type: PropertyType.DateValue,
     name: 'hasDate',
     optional: true
   })
-  dates: ReadDateValue[];
+  dates: Period[];
 
   @Property({
     type: PropertyType.ListValue,
     name: 'hasListItem',
     optional: true
   })
-  lists: ReadListValue[];
+  lists: string[];
 
   @Property({
     type: PropertyType.LinkValue,
     name: 'hasOtherThing',
     optional: true
   })
-  otherThings: ReadLinkValue[];
+  otherThings: string[];
 }
 
 @Resource({
@@ -88,7 +93,7 @@ export class BlueThingModel extends ThingModel {
     name: 'hasBlueThing',
     optional: true
   })
-  blueThings: ReadLinkValue[];
+  blueThings: string[];
 }
 
 @Component({
@@ -141,5 +146,9 @@ export class AppComponent implements OnInit {
         this.loading = false;
         this.blueThingsPage = page;
       });
+  }
+
+  onClickId(thing: ThingModel) {
+    console.log(thing);
   }
 }

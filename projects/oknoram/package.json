@@ -1,6 +1,13 @@
 {
   "name": "oknoram",
   "version": "0.0.1",
+  "license": "MIT",
+  "description": "This project provides a simple Object Knora Mapping for Typescript language",
+  "keywords": ["Angular", "Knora"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LaDHUL/oknoram"
+  },
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0"

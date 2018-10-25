@@ -10,6 +10,7 @@ import { GVVar } from './gvvar';
 
 export const TypeMapping = new Map<PropertyType, string>([
   [PropertyType.TextValue, 'xsd:string'],
+  [PropertyType.RichTextValue, 'xsd:string'],
   [PropertyType.BooleanValue, 'xsd:boolean'],
   [PropertyType.IntValue, 'xsd:integer'],
   [PropertyType.DecimalValue, 'xsd:decimal'],
@@ -41,6 +42,11 @@ export class GravsearchGvqueryService implements GravsearchService {
   ) {
     attributes.forEach((att, key) => {
       const type = TypeMapping.get(att.type);
+      if (!type) {
+        throw new Error(
+          `Not yet managed gravsearch query for property type ${type}`
+        );
+      }
       const var_ = new GVVar(att.name, type).optional(att.optional);
       qBuilder.var(var_);
     });
