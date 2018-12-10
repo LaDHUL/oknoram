@@ -115,3 +115,23 @@ How does it work?
   - `GravsearchService`: [`GravsearchGvqueryService`](projects/oknoram/src/lib/gravsearch/impl/gravsearch-gvquery.service.ts)
   - `KnoraApiService`: [`KnoraApiDefaultService`](projects/oknoram/src/lib/knora-api/impl/knora-api-default.service.ts)
   - `ConverterService`: [`ConverterReadResourceService`](projects/oknoram/src/lib/converter/impl/converter-read-resource.service.ts)
+
+## Feature request
+
+- manage `ForbiddenResource` resource
+- cardinality definition to @Property : cardinality = SINGLE | ARRAY
+- oknoramService.findAll<ThingModel>(
+  ThingModel,
+  Sort list def here (or PageRequest API return a Sort list ?)
+  )
+- oknoramService.findAll<ThingModel>(
+  ThingModel,
+  Predicate here to provide FILTER
+  )
+- oknoramService.save<ThingModel>(ThingModel, object) create or save a resource OR save per property to move closer to Knora API ?
+- oknoramService.delete(object.id) delete a resource
+
+## Limitations
+
+- `Decorator` being not available for interface and `Typescript` classes not
+  supporting multi inheritance, therefore we cannot provide multi inheritance into mapping
