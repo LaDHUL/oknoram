@@ -9,7 +9,7 @@ This project provides a simple **O**bject **Knora** **M**apping for Typescript l
 
 ## Demo
 
-Requirements: a running Knora stack containing the Anything ontology with data. The default configuration point to http://0.0.0.0:3333 or can be changed in the [`environment.ts`](src/environments/environment.ts) file.
+Requirements: a running Knora stack containing the Anything ontology with its data. The default configuration points to http://0.0.0.0:3333 or can be changed in the [`environment.ts`](src/environments/environment.ts) file.
 
 - clone project
 - yarn
@@ -118,6 +118,7 @@ How does it work?
 
 ## Feature request
 
+_ revamp `PageRequest`? Knora page API is more an iterator API than a page request...
 - manage `ForbiddenResource` resource
 - cardinality definition to @Property : cardinality = SINGLE | ARRAY
 - oknoramService.findAll<ThingModel>(
