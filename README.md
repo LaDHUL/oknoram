@@ -3,7 +3,7 @@
 
 # oknoram
 
-This project provides a simple **O**bject **Knora** **M**apping for Typescript language in a Angular app. Like [**ORM**](https://fr.wikipedia.org/wiki/Mapping_objet-relationnel) tools that simplify the link between the **Object Oriented** and **Relational** worlds, this library try to simplify the link between the **Object Oriented** and **Web semantic Knora** worlds.
+This project provides a simple **O**bject **Knora** **M**apping for Typescript language in a Angular app. Like [**ORM**](https://fr.wikipedia.org/wiki/Mapping_objet-relationnel) tools which simplify the link between the **Object Oriented** and **Relational** worlds, this library tries to simplify the link between the **Object Oriented** and **Web semantic Knora** worlds.
 
 (Highly inspired from [Spring Data Framework](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/))
 
